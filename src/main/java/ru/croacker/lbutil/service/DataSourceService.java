@@ -19,9 +19,9 @@ public class DataSourceService implements IConnectionsService {
     try {
       dataSource = new ComboPooledDataSource();
       dataSource.setDriverClass(connectionDto.getJdbcDriver());
-      dataSource.setJdbcUrl("jdbc:postgresql://localhost:5433/mlcms");
-      dataSource.setUser("postgres");
-      dataSource.setPassword("postgres");
+      dataSource.setJdbcUrl(connectionDto.getUrl());
+      dataSource.setUser(connectionDto.getUser());
+      dataSource.setPassword(connectionDto.getPassword());
     } catch (PropertyVetoException e) {
       log.error(e.getMessage(), e);
     }

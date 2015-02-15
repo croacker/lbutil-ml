@@ -10,20 +10,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum JdbcDriver {
 
-//    H2("org.h2.Driver"),
-//    POSTGRESQL("org.postgresql.Driver"),
-//    ORACLE("oracle.jdbc.OracleDriver"),
-//    DERBY_REMOTE("org.apache.derby.jdbc.ClientDriver"),
-//    DERBY_EMBEDDED("org.apache.derby.jdbc.EmbeddedDriver"),
-//    HSQL_REMOTE("org.hsql.jdbcDriver"),
-//    HSQL_EMBEDDED("org.hsql.jdbc.JDBCDriver"),
-//    MYSQL("com.mysql.jdbc.Driver"),
-//    MSSQL_JTDS("net.sourceforge.jtds.jdbc.Driver"),
-//    MSSQL_MS("com.microsoft.sqlserver.jdbc.SQLServerDriver"),
-//    SQLITE("org.sqlite.JDBC"),
-//    SYSBASE_NATIVE("com.sybase.jdbc4.jdbc.SybConnectionPoolDataSource")
-//    ;
-
   H2("org.h2.Driver", "jdbc:h2:<os_path_to_file>"),
   POSTGRESQL("org.postgresql.Driver", "jdbc:postgresql://<host>:<port>/<database>?user=<username>&password=<pass>"),
   ORACLE("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@<host>:<port>:<service>"),
