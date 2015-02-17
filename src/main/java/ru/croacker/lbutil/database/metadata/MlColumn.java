@@ -17,7 +17,7 @@ public class MlColumn {
   @Getter @Setter
   private Boolean systemField;
   @Getter @Setter
-  private String primaryKey;
+  private Boolean primaryKey;
   @Getter @Setter
   private Boolean autoIncrement;
   @Getter @Setter
