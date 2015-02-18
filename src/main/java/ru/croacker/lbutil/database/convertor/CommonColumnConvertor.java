@@ -5,8 +5,6 @@ import org.apache.ddlutils.model.Column;
 import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.metadata.MlColumn;
 
-import java.sql.Timestamp;
-
 /**
  * Конвертер для колонки
  */
@@ -32,6 +30,10 @@ public class CommonColumnConvertor implements Convertor<Column, MlColumn> {
         mlColumn.setFieldFormat(null);
         mlColumn.setGroup(null);
         mlColumn.setDescription(getDescription(column));
+        mlColumn.setDefaultValue(column.getDefaultValue());
+        mlColumn.setVirtual(false);
+        mlColumn.setLongLinkValue(null);
+        mlColumn.setReadOnly(false);
         return mlColumn;
     }
 
