@@ -35,12 +35,8 @@ public class MetadataLiquibaseWriteService {
             changeSet.appendChild(createInsertClass(document, mlTable));
 
             for (MlColumn mlColumn : mlTable.getColumns()) {
-                Element columnMetadata = document.createElement("");
-                //TODO Добавляем колонки
-                changeSet.appendChild(createInsertAttr(document, mlColumn, mlTable.getId()));
+                changeSet.appendChild(createInsertAttr(document, mlTable.getId(), mlColumn));
             }
-
-
             root.appendChild(changeSet);
         }
 
@@ -112,7 +108,7 @@ public class MetadataLiquibaseWriteService {
      * @param mlColumn
      * @return
      */
-    private Element createInsertAttr(Document document, MlColumn mlColumn, Long tableId) {
+    private Element createInsertAttr(Document document, Long tableId, MlColumn mlColumn) {
 
         Element insertAttr = document.createElement("insert");
         insertAttr.setAttribute("tableName", "MlAttr");
