@@ -17,9 +17,9 @@ import java.util.Date;
  */
 @Service
 @Slf4j
-public class MetadataLiquibaseWriteService {
+public class MetadataLiquibaseService {
 
-    public void write(MlDatabase mlDatabase, String fileName) throws ParserConfigurationException {
+    public Document write(MlDatabase mlDatabase) throws ParserConfigurationException {
 
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         Element root = document.createElementNS("http://www.liquibase.org/xml/ns/dbchangelog", "databaseChangeLog");
@@ -40,6 +40,7 @@ public class MetadataLiquibaseWriteService {
             root.appendChild(changeSet);
         }
 
+      return document;
     }
 
     /**

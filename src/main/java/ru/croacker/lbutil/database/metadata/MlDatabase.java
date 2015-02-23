@@ -1,5 +1,7 @@
 package ru.croacker.lbutil.database.metadata;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,11 @@ import java.util.List;
  */
 public class MlDatabase {
 
+  @Getter
   private List<MlTable> tables = new ArrayList<>();
 
-  public List<MlTable> getTables() {
-    return tables;
+  public void addTable(MlTable mlTable){
+    getTables().add(mlTable);
   }
+
 }
