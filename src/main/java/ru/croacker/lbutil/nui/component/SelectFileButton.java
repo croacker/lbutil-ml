@@ -13,8 +13,11 @@ public class SelectFileButton extends JButton {
 
   private JTextComponent filenameField;
 
-  public SelectFileButton(JTextComponent filenameField){
+  private int dialogType;
+
+  public SelectFileButton(JTextComponent filenameField, int dialogType){
     this.filenameField = filenameField;
+    this.dialogType = dialogType;
     initComponents();
   }
 
@@ -36,7 +39,12 @@ public class SelectFileButton extends JButton {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Укажите файл набора изменений");
     fileChooser.setFileFilter(new FileNameExtensionFilter("XML(*.xml)", "xml"));
-    int rVal = fileChooser.showSaveDialog(getParent());
+    int rVal = -1;
+    if(dialogType == JFileChooser.OPEN_DIALOG){
+      rVal = fileChooser.showOpenDialog(getParent());
+    }else if(dialogType == JFileChooser.SAVE_DIALOG){
+      rVal = fileChooser.showSaveDialog(getParent());
+    }
     if (rVal == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getAbsolutePath()
           + (fileChooser.getSelectedFile().getAbsolutePath().endsWith(".xml") ? "" : ".xml");

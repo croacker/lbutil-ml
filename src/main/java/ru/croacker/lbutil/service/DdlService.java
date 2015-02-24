@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,6 +24,11 @@ import java.sql.Statement;
 @Service
 @Slf4j
 public class DdlService {
+
+  private static final List<String> excludeTables = new ArrayList(){{
+    add("databasechangelog");
+    add("databasechangeloglock");
+  }};
 
   @Autowired
   CommonTableConvertor tableConvertor;
@@ -47,10 +54,30 @@ public class DdlService {
   public MlDatabase getMlDatabaseModel(DataSource dataSource){
     MlDatabase mlDatabase = new MlDatabase();
     Database database = getDatabaseModel(dataSource);
-    for(Table table:database.getTables()){
+    for(Table table:database.getTables()){//TODO Добавить упорядочивание, сначала должны идти Системные таблицы
+      if(excludeTables.contains(table.getName())){
+        continue;
+      }
       mlDatabase.addTable(tableConvertor.toMetadata(table));
     }
     return mlDatabase;
+  }
+
+  /**
+   *
+   * @param dataSource
+   * @return
+   */
+  public boolean mlClassExists(DataSource dataSource){
+    boolean exists = false;
+    Database database = getDatabaseModel(dataSource);
+    for(Table table: database.getTables()){
+      exists = table.getName().equalsIgnoreCase("MlClass");
+      if(exists){
+        break;
+      }
+    }
+    return exists;
   }
 
   /**

@@ -1,39 +1,50 @@
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.ddlutils.Platform;
-import org.apache.ddlutils.PlatformFactory;
+import org.w3c.dom.Document;
+import ru.croacker.lbutil.ContextLoader;
+import ru.croacker.lbutil.database.metadata.MlDatabase;
+import ru.croacker.lbutil.service.DdlService;
+import ru.croacker.lbutil.service.FileWriteService;
+import ru.croacker.lbutil.service.MetadataLiquibaseService;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
- * Created by user on 01.02.2015.
+ *
  */
 public class TestDdlUtil {
 
   public static void main(String[] args) throws PropertyVetoException, SQLException {
-    DataSource dataSource = getDS();
-    Platform platform = PlatformFactory.createNewPlatformInstance(dataSource);
-    platform.readModelFromDatabase("mlcms");
+    loadContext();
+    DdlService ddlService = ContextLoader.getInstance().getContext().getBean(DdlService.class);
+    MlDatabase mlDatabase = ddlService.getMlDatabaseModel(getDS());
+
+    MetadataLiquibaseService metadataLiquibaseService = ContextLoader.getInstance().getContext().getBean(MetadataLiquibaseService.class);
+    Document document = metadataLiquibaseService.formDocument(mlDatabase);
+
+    FileWriteService fileWriteService = ContextLoader.getInstance().getContext().getBean(FileWriteService.class);
+    fileWriteService.writeXml(document, "c:/tmp/ml-metadata-file.xml");
   }
 
   private static DataSource getDS() throws PropertyVetoException, SQLException {
     ComboPooledDataSource cpds = new ComboPooledDataSource();
     cpds.setDriverClass("org.postgresql.Driver");
-    cpds.setJdbcUrl("jdbc:postgresql://localhost:5433/mlcms");
+    cpds.setJdbcUrl("jdbc:postgresql://localhost:5433/mlcms_lo2");
     cpds.setUser("postgres");
     cpds.setPassword("postgres");
-    try {
-      Connection testConnection = cpds.getConnection();
-      Statement testStatement = testConnection.createStatement();
-      ResultSet resultSet = testStatement.executeQuery("select * from databasechangelog");
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+//    try {
+//      Connection testConnection = cpds.getConnection();
+//      Statement testStatement = testConnection.createStatement();
+//      ResultSet resultSet = testStatement.executeQuery("select * from databasechangelog");
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    }
     return cpds;
+  }
+
+  private static void loadContext() {
+    ContextLoader.getInstance().load();
   }
 
 }

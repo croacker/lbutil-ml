@@ -11,6 +11,8 @@ import lombok.Getter;
 public enum JdbcDriver {
 
   H2("org.h2.Driver", "jdbc:h2:<os_path_to_file>"),
+  //TODO Подумать как присобачить к URL доп параметры, например для постгре unknownLength = int
+  //Выглядит это так jdbc:postgresql://localhost:5433/mlcms_lo2?unknownLength=10485760
   POSTGRESQL("org.postgresql.Driver", "jdbc:postgresql://<host>:<port>/<database>?user=<username>&password=<pass>"),
   ORACLE("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@<host>:<port>:<service>"),
   DERBY_REMOTE("org.apache.derby.jdbc.ClientDriver", "jdbc:derby://<server>:<port>/<database>"),

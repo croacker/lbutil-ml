@@ -75,7 +75,7 @@ public class ExportChangelogPanel extends JPanel {
   }
 
   private JButton getSelectFileButton(JTextComponent filenameVisualizer){
-    return new SelectFileButton(filenameVisualizer);
+    return new SelectFileButton(filenameVisualizer, JFileChooser.SAVE_DIALOG);
   }
 
 }
