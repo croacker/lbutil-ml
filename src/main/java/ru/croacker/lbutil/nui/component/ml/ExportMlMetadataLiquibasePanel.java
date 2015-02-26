@@ -1,6 +1,5 @@
-package ru.croacker.lbutil.nui.component.exp;
+package ru.croacker.lbutil.nui.component.ml;
 
-import org.springframework.stereotype.Component;
 import ru.croacker.lbutil.nui.component.SelectFileButton;
 
 import javax.annotation.PostConstruct;
@@ -9,10 +8,9 @@ import javax.swing.text.JTextComponent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Панель экспорта наборов изменений liquibase для записи данных о Ml классах и атрибутах
  */
-@Component
-public class ExportChangelogPanel extends JPanel {
+public class ExportMlMetadataLiquibasePanel extends JPanel {
 
   private GroupLayout jpExportLayout;
 
@@ -21,20 +19,20 @@ public class ExportChangelogPanel extends JPanel {
   private JButton jbSelectExportFile;
   private JButton jbExport;
 
-  public ExportChangelogPanel(){
+  public ExportMlMetadataLiquibasePanel(){
   }
 
   @PostConstruct
   private void initComponents() {
     setBorder(javax.swing.BorderFactory.createEtchedBorder());
-    setToolTipText("Экспорт");
+    setToolTipText("Экспорт Ml классов");
 
-    jlExportFile = new JLabel("Файл:");
+    jlExportFile = new JLabel("Файл Ml классов:");
     jtfExportFile = new JTextField();
     jbSelectExportFile = getSelectFileButton(jtfExportFile);
-    jbSelectExportFile.setToolTipText("Выбор файла для экспорта наборов изменений");
+    jbSelectExportFile.setToolTipText("Выбор файла для экспорта наборов изменений ML классов");
     jbExport = new JButton("Экспорт");
-    jbExport.setToolTipText("Экспорт схемы БД в файл наборов изменений");
+    jbExport.setToolTipText("Экспорт ML классов в файл наборов изменений");
 
     jpExportLayout = new javax.swing.GroupLayout(this);
     setLayout(jpExportLayout);
@@ -79,3 +77,4 @@ public class ExportChangelogPanel extends JPanel {
   }
 
 }
+

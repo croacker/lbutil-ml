@@ -1,4 +1,4 @@
-package ru.croacker.lbutil.nui.component.imp;
+package ru.croacker.lbutil.nui.component.liquibase.imp;
 
 import org.springframework.stereotype.Component;
 import ru.croacker.lbutil.nui.component.SelectFileButton;
@@ -30,7 +30,7 @@ public class ImportChangelogPanel extends JPanel {
     setBorder(javax.swing.BorderFactory.createEtchedBorder());
     setToolTipText("Импорт");
 
-    jlImportFile = new JLabel("Файл:");
+    jlImportFile = new JLabel("Файл импорта схемы БД:");
     jtfImportFile = new JTextField();
     jbSelectImportFile = getSelectFile(jtfImportFile);
     jbSelectImportFile.setToolTipText("Выбор файла содержащего наборы изменений");

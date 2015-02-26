@@ -44,7 +44,11 @@ public class SelectFileButton extends JButton {
       rVal = fileChooser.showOpenDialog(getParent());
     }else if(dialogType == JFileChooser.SAVE_DIALOG){
       rVal = fileChooser.showSaveDialog(getParent());
+    }else if(dialogType == JFileChooser.DIRECTORIES_ONLY){
+      fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      rVal = fileChooser.showOpenDialog(getParent());
     }
+
     if (rVal == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getAbsolutePath()
           + (fileChooser.getSelectedFile().getAbsolutePath().endsWith(".xml") ? "" : ".xml");

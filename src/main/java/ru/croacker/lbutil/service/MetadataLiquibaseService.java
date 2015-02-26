@@ -13,7 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.Date;
 
 /**
- *
+ * Сервис экспорта Ml-класов в liquibase
  */
 @Service
 @Slf4j
