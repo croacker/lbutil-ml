@@ -11,7 +11,7 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.croacker.lbutil.database.convertor.CommonResultSetColumnConvertor;
+import ru.croacker.lbutil.database.convertor.CommonResultSetMlColumnConvertor;
 import ru.croacker.lbutil.database.convertor.CommonResultSetMlTableConvertor;
 import ru.croacker.lbutil.database.convertor.CommonTableConvertor;
 import ru.croacker.lbutil.database.metadata.MlColumn;
@@ -42,7 +42,7 @@ public class DdlService {
   @Autowired
   CommonResultSetMlTableConvertor resultSetTableConvertor;
   @Autowired
-  CommonResultSetColumnConvertor resultSetColumnConvertor;
+  CommonResultSetMlColumnConvertor resultSetColumnConvertor;
 
   public Database getDatabaseModel(DataSource dataSource) {
     String databaseName;

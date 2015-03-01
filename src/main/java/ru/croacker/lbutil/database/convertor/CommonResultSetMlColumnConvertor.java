@@ -11,7 +11,7 @@ import java.sql.ResultSet;
  */
 @Service
 @Slf4j
-public class CommonResultSetColumnConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlColumn> {
+public class CommonResultSetMlColumnConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlColumn> {
   @Override
   public MlColumn toMetadata(ResultSet resultSet) {
     MlColumn mlColumn = new MlColumn();
