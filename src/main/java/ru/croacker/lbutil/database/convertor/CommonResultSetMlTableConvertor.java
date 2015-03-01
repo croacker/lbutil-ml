@@ -9,7 +9,7 @@ import java.sql.ResultSet;
  *
  */
 @Service
-public class CommonResultSetTableConverter extends ResultSetConvertor implements Convertor<ResultSet, MlTable> {
+public class CommonResultSetMlTableConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlTable> {
 
   @Override
   public MlTable toMetadata(ResultSet resultSet) {
