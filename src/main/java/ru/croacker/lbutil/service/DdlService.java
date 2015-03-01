@@ -104,39 +104,16 @@ public class DdlService {
               "select * from \"MlAttr\" where \"mlClass\" = " + mlTable.getId())
       );
     }
-//    try {
-//      while (resultSetClass.next()) {
-//        MlTable mlTable = resultSetTableConvertor.toMetadata(resultSetClass);
-//        log.info("Convert table: " + mlTable.getTableName());
-//        ResultSet resultSetAttr = execSelect(dataSource, "select * from \"MlAttr\" where \"mlClass\" = " + mlTable.getId());
-//        //конвертируем класс
-//        while (resultSetAttr.next()){
-//          //конвертируем поля
-//          mlTable.getColumns().add(resultSetColumnConvertor.toMetadata(resultSetAttr));
-//        }
-//        mlDatabase.addTable(mlTable);
-//        resultSetAttr.close();
-//      }
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
     return mlDatabase;
   }
 
-//  private ResultSet execSelect(DataSource dataSource, String que){
-//    ResultSet resultSet;
-//    Statement statement;
-//    try {
-//      Connection connection = dataSource.getConnection();
-//      statement = connection.createStatement();
-//      resultSet = statement.executeQuery(que);
-//    } catch (SQLException e) {
-//      log.error(e.getMessage(), e);
-//      throw new RuntimeException(e.getMessage(), e);
-//    }
-//    return resultSet;
-//  }
-
+  /**
+   *
+   * @param dataSource
+   * @param handler
+   * @param que
+   * @return
+   */
   private Object execSelect(DataSource dataSource, ResultSetHandler handler, String que){
     Object result = null;
     Connection connection = null;
@@ -162,6 +139,10 @@ public class DdlService {
     }
   }
 
+  /**
+   * Хендлер для получения таблиц
+   * @return
+   */
   private ResultSetHandler<MlDatabase> getTableHandler(){
     return new ResultSetHandler<MlDatabase>() {
       @Override
@@ -176,6 +157,10 @@ public class DdlService {
     };
   }
 
+  /**
+   * Хендлер для получения колонок
+   * @return
+   */
   private ResultSetHandler<List<MlColumn>> getColumnsHandler(){
     return new ResultSetHandler<List<MlColumn>>() {
       @Override

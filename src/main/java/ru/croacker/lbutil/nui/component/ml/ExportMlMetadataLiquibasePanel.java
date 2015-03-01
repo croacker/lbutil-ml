@@ -1,5 +1,6 @@
 package ru.croacker.lbutil.nui.component.ml;
 
+import org.springframework.stereotype.Component;
 import ru.croacker.lbutil.nui.component.SelectFileButton;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Панель экспорта наборов изменений liquibase для записи данных о Ml классах и атрибутах
  */
+@Component
 public class ExportMlMetadataLiquibasePanel extends JPanel {
 
   private GroupLayout jpExportLayout;

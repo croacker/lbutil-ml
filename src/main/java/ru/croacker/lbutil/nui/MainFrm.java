@@ -5,17 +5,21 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
 import ru.croacker.lbutil.database.DbConnectionDto;
+import ru.croacker.lbutil.database.metadata.MlDatabase;
 import ru.croacker.lbutil.nui.component.MainMenuBar;
 import ru.croacker.lbutil.nui.component.connection.ConnectionPanel;
 import ru.croacker.lbutil.nui.component.connection.ConnectionsListPanel;
 import ru.croacker.lbutil.nui.component.liquibase.exp.ExportChangelogPanel;
 import ru.croacker.lbutil.nui.component.liquibase.imp.ImportChangelogPanel;
+import ru.croacker.lbutil.nui.component.ml.ExportJavaClassesPanel;
+import ru.croacker.lbutil.nui.component.ml.ExportMlMetadataLiquibasePanel;
 import ru.croacker.lbutil.nui.component.toolbar.MainToolBar;
-import ru.croacker.lbutil.service.LiquibaseService;
-import ru.croacker.lbutil.service.PersistsService;
+import ru.croacker.lbutil.service.*;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,6 +40,18 @@ public class MainFrm extends JFrame {
 
   @Autowired
   private PersistsService persistService;
+
+  @Autowired
+  private DataSourceService dataSourceService;
+
+  @Autowired
+  private DdlService ddlService;
+
+  @Autowired
+  private MetadataLiquibaseService metadataLiquibaseService;
+
+  @Autowired
+  private FileWriteService fileWriteService;
 
   @Autowired
   @Getter
@@ -67,6 +83,16 @@ public class MainFrm extends JFrame {
   @Setter
   private ExportChangelogPanel jpExport;
 
+  @Autowired
+  @Getter
+  @Setter
+  private ExportMlMetadataLiquibasePanel jpExportMlMetadata;
+
+  @Autowired
+  @Getter
+  @Setter
+  private ExportJavaClassesPanel jpExportJavaClasses;
+
   public MainFrm() {
   }
 
@@ -89,6 +115,8 @@ public class MainFrm extends JFrame {
     jpConnection.addSaveListener(getSaveActionListener());
     jpImport.addImportListener(getImportButtonListener());
     jpExport.addExportListener(getExportButtonListener());
+    jpExportMlMetadata.addExportListener(getExportMlClassButtonListener());
+    jpExportJavaClasses.addExportListener(getExportJavaClassesButtonListener());
 
     javax.swing.GroupLayout jpContentLayout = new javax.swing.GroupLayout(jpContent);
     jpContent.setLayout(jpContentLayout);
@@ -99,8 +127,11 @@ public class MainFrm extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpConnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                )
                 .addContainerGap())
     );
     jpContentLayout.setVerticalGroup(
@@ -110,10 +141,14 @@ public class MainFrm extends JFrame {
                 .addComponent(jpConnection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 99, Short.MAX_VALUE))
+                .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,6 +193,24 @@ public class MainFrm extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         exportChangelog();
+      }
+    };
+  }
+
+  private ActionListener getExportMlClassButtonListener() {
+    return new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        exportMlClass();
+      }
+    };
+  }
+
+  private ActionListener getExportJavaClassesButtonListener() {
+    return new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        exportJavaClasses();
       }
     };
   }
@@ -245,6 +298,31 @@ public class MainFrm extends JFrame {
       log.error(e.getMessage(), e);
       JOptionPane.showMessageDialog(null, e.getMessage());
     }
+  }
+
+  private void exportMlClass() {
+    DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
+
+    boolean readMlClass = false;
+    if(ddlService.mlClassExists(dataSource)){
+      readMlClass = JOptionPane.showConfirmDialog (this,
+          "Обнаружена таблица MLClass, выполнить чтение классов из нее?",
+          "Таблица MLClass",
+          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+
+    MlDatabase mlDatabase;
+    if(readMlClass) {
+      mlDatabase = ddlService.getMlDatabaseModelFromMlClass(dataSource);
+    }else {
+      mlDatabase = ddlService.getMlDatabaseModel(dataSource);
+    }
+    Document document = metadataLiquibaseService.formDocument(mlDatabase);
+    fileWriteService.writeXml(document, jpExportMlMetadata.getFileName());
+  }
+
+  private void exportJavaClasses() {
+
   }
 
   private void saveConfiguration() {

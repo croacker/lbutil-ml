@@ -1,5 +1,6 @@
 package ru.croacker.lbutil.nui.component.ml;
 
+import org.springframework.stereotype.Component;
 import ru.croacker.lbutil.nui.component.SelectFileButton;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Панель экспорта Ml классов как java-классов
  */
+@Component
 public class ExportJavaClassesPanel  extends JPanel {
 
   private GroupLayout jpExportLayout;

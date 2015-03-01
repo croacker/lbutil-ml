@@ -37,7 +37,7 @@ public class MainMenuBar extends JMenuBar {
   @PostConstruct
   public void initComponents() {
     jmFile = new JMenu("Файл");
-    jmiExit = new JMenuItem("Файл");
+    jmiExit = new JMenuItem("Выход");
     jmiExit.setIcon(new ImageIcon(getClass().getResource("/images/close.png")));
     jmFile.add(jmiExit);
     add(jmFile);

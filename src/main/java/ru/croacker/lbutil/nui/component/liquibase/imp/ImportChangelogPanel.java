@@ -30,7 +30,7 @@ public class ImportChangelogPanel extends JPanel {
     setBorder(javax.swing.BorderFactory.createEtchedBorder());
     setToolTipText("Импорт");
 
-    jlImportFile = new JLabel("Файл импорта схемы БД:");
+    jlImportFile = new JLabel("Файл импорта liquibase:");
     jtfImportFile = new JTextField();
     jbSelectImportFile = getSelectFile(jtfImportFile);
     jbSelectImportFile.setToolTipText("Выбор файла содержащего наборы изменений");

@@ -27,9 +27,9 @@ public class ExportChangelogPanel extends JPanel {
   @PostConstruct
   private void initComponents() {
     setBorder(javax.swing.BorderFactory.createEtchedBorder());
-    setToolTipText("Экспорт");
+    setToolTipText("Экспорт схемы БД в указанный файл");
 
-    jlExportFile = new JLabel("Файл экспорта схемы БД:");
+    jlExportFile = new JLabel("Файл схемы БД:");
     jtfExportFile = new JTextField();
     jbSelectExportFile = getSelectFileButton(jtfExportFile);
     jbSelectExportFile.setToolTipText("Выбор файла для экспорта наборов изменений");
