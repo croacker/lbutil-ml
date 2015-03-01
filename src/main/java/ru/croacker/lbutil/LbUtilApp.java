@@ -16,6 +16,7 @@ public class LbUtilApp implements Runnable {
   MainFrm frmMain;
 
   public void run() {
+    frmMain.setLocationRelativeTo(null);
     frmMain.setVisible(true);
   }
 

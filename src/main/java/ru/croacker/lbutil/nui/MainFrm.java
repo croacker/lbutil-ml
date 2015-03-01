@@ -126,11 +126,11 @@ public class MainFrm extends JFrame {
                 .addComponent(jpConnectionsListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpConnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpConnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 )
                 .addContainerGap())
     );
@@ -224,7 +224,7 @@ public class MainFrm extends JFrame {
     };
   }
 
-  private ListSelectionListener getConnectionSelectionListener(){
+  private ListSelectionListener getConnectionSelectionListener() {
     return new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
@@ -254,9 +254,9 @@ public class MainFrm extends JFrame {
   /**
    * Получить подключения из БД
    */
-  private void restoreConnections(){
+  private void restoreConnections() {
     jpConnectionsListPanel.setConections(persistService.getAll());
-    if(jpConnectionsListPanel.getConnectionsCount() != 0){
+    if (jpConnectionsListPanel.getConnectionsCount() != 0) {
       aplyCurrentConnection();
     }
   }
@@ -268,7 +268,7 @@ public class MainFrm extends JFrame {
 
   private void removeConnection() {
     DbConnectionDto connectionDto = jpConnectionsListPanel.getSelected();
-    if(connectionDto != null){
+    if (connectionDto != null) {
       persistService.remove(jpConnectionsListPanel.getSelected());
       jpConnectionsListPanel.removeConnection(connectionDto);
       jpConnection.setConnection(jpConnectionsListPanel.getSelected());
@@ -300,25 +300,32 @@ public class MainFrm extends JFrame {
     }
   }
 
+  //TODO слишком дохуя сервисов, сделать меньше
   private void exportMlClass() {
-    DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
+    try {
+      DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
 
-    boolean readMlClass = false;
-    if(ddlService.mlClassExists(dataSource)){
-      readMlClass = JOptionPane.showConfirmDialog (this,
-          "Обнаружена таблица MLClass, выполнить чтение классов из нее?",
-          "Таблица MLClass",
-          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-    }
+      boolean readMlClass = false;
+      if (ddlService.mlClassExists(dataSource)) {
+        readMlClass = JOptionPane.showConfirmDialog(this,
+            "Обнаружена таблица MLClass, выполнить чтение классов из нее?",
+            "Таблица MLClass",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+      }
 
-    MlDatabase mlDatabase;
-    if(readMlClass) {
-      mlDatabase = ddlService.getMlDatabaseModelFromMlClass(dataSource);
-    }else {
-      mlDatabase = ddlService.getMlDatabaseModel(dataSource);
+      MlDatabase mlDatabase;
+      if (readMlClass) {
+        mlDatabase = ddlService.getMlDatabaseModelFromMlClass(dataSource);
+      } else {
+        mlDatabase = ddlService.getMlDatabaseModel(dataSource);
+      }
+      Document document = metadataLiquibaseService.formDocument(mlDatabase);
+      fileWriteService.writeXml(document, jpExportMlMetadata.getFileName());
+      JOptionPane.showMessageDialog(this, "Экспорт успешно завершен!");
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      JOptionPane.showMessageDialog(null, e.getMessage());
     }
-    Document document = metadataLiquibaseService.formDocument(mlDatabase);
-    fileWriteService.writeXml(document, jpExportMlMetadata.getFileName());
   }
 
   private void exportJavaClasses() {
@@ -329,12 +336,12 @@ public class MainFrm extends JFrame {
     DbConnectionDto connectionDto = jpConnection.getConnection();
     boolean isNew = connectionDto.getId() == null;
     connectionDto = persistService.persists(jpConnection.getConnection());
-    if(isNew){
+    if (isNew) {
       jpConnectionsListPanel.addConnection(connectionDto);
     }
   }
 
-  private void aplyCurrentConnection(){
+  private void aplyCurrentConnection() {
     jpConnection.setConnection(jpConnectionsListPanel.getSelected());
   }
 }
