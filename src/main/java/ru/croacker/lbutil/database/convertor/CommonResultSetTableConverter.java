@@ -1,8 +1,6 @@
-package ru.croacker.lbutil.database;
+package ru.croacker.lbutil.database.convertor;
 
 import org.springframework.stereotype.Service;
-import ru.croacker.lbutil.database.convertor.Convertor;
-import ru.croacker.lbutil.database.convertor.ResultSetConvertor;
 import ru.croacker.lbutil.database.metadata.MlTable;
 
 import java.sql.ResultSet;
@@ -11,7 +9,7 @@ import java.sql.ResultSet;
  *
  */
 @Service
-public class CommonResultSetTableConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlTable> {
+public class CommonResultSetTableConverter extends ResultSetConvertor implements Convertor<ResultSet, MlTable> {
 
   @Override
   public MlTable toMetadata(ResultSet resultSet) {

@@ -12,7 +12,7 @@ import org.apache.ddlutils.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.convertor.CommonResultSetColumnConvertor;
-import ru.croacker.lbutil.database.CommonResultSetTableConvertor;
+import ru.croacker.lbutil.database.convertor.CommonResultSetTableConvertor;
 import ru.croacker.lbutil.database.convertor.CommonTableConvertor;
 import ru.croacker.lbutil.database.metadata.MlColumn;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
