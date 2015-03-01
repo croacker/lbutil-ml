@@ -17,8 +17,9 @@ public class TestDdlUtil {
 
   public static void main(String[] args) throws PropertyVetoException, SQLException {
     loadContext();
+
     DdlService ddlService = ContextLoader.getInstance().getContext().getBean(DdlService.class);
-    MlDatabase mlDatabase = ddlService.getMlDatabaseModel(getDS());
+    MlDatabase mlDatabase = ddlService.getMlDatabaseModelFromMlClass(getDS());
 
     MetadataLiquibaseService metadataLiquibaseService = ContextLoader.getInstance().getContext().getBean(MetadataLiquibaseService.class);
     Document document = metadataLiquibaseService.formDocument(mlDatabase);
@@ -30,7 +31,7 @@ public class TestDdlUtil {
   private static DataSource getDS() throws PropertyVetoException, SQLException {
     ComboPooledDataSource cpds = new ComboPooledDataSource();
     cpds.setDriverClass("org.postgresql.Driver");
-    cpds.setJdbcUrl("jdbc:postgresql://localhost:5433/mlcms_lo2");
+    cpds.setJdbcUrl("jdbc:postgresql://localhost:5433/mlcms");
     cpds.setUser("postgres");
     cpds.setPassword("postgres");
 //    try {

@@ -1,20 +1,27 @@
 package ru.croacker.lbutil.service;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croacker.lbutil.database.convertor.CommonResultSetColumnConvertor;
+import ru.croacker.lbutil.database.convertor.CommonResultSetTableConvertor;
 import ru.croacker.lbutil.database.convertor.CommonTableConvertor;
+import ru.croacker.lbutil.database.metadata.MlColumn;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
+import ru.croacker.lbutil.database.metadata.MlTable;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +39,10 @@ public class DdlService {
 
   @Autowired
   CommonTableConvertor tableConvertor;
+  @Autowired
+  CommonResultSetTableConvertor resultSetTableConvertor;
+  @Autowired
+  CommonResultSetColumnConvertor resultSetColumnConvertor;
 
   public Database getDatabaseModel(DataSource dataSource) {
     String databaseName;
@@ -81,38 +92,101 @@ public class DdlService {
   }
 
   /**
-   *
+   * Получить классы из таблиц MlClass и MlAttr
    * @param dataSource
    * @return
    */
   public MlDatabase getMlDatabaseModelFromMlClass(DataSource dataSource){
-    MlDatabase mlDatabase = new MlDatabase();
-    ResultSet resultSetClass = execSelect(dataSource, "select * from MlClass;");
-    try {
-      while (resultSetClass.next()) {
-        ResultSet resultSetAttr = execSelect(dataSource, "select * from MlAttr where mlClass = " + resultSetClass.getString(0));
-        //конвертируем класс
-        while (resultSetAttr.next()){
-          //конвертируем поля
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
+    MlDatabase mlDatabase = (MlDatabase) execSelect(dataSource, getTableHandler(), "select * from \"MlClass\"");
+    for (MlTable mlTable:mlDatabase.getTables()){
+      mlTable.addColumns(
+          (List<MlColumn>) execSelect(dataSource, getColumnsHandler(),
+              "select * from \"MlAttr\" where \"mlClass\" = " + mlTable.getId())
+      );
     }
+//    try {
+//      while (resultSetClass.next()) {
+//        MlTable mlTable = resultSetTableConvertor.toMetadata(resultSetClass);
+//        log.info("Convert table: " + mlTable.getTableName());
+//        ResultSet resultSetAttr = execSelect(dataSource, "select * from \"MlAttr\" where \"mlClass\" = " + mlTable.getId());
+//        //конвертируем класс
+//        while (resultSetAttr.next()){
+//          //конвертируем поля
+//          mlTable.getColumns().add(resultSetColumnConvertor.toMetadata(resultSetAttr));
+//        }
+//        mlDatabase.addTable(mlTable);
+//        resultSetAttr.close();
+//      }
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    }
     return mlDatabase;
   }
 
-  private ResultSet execSelect(DataSource dataSource, String que){
-    ResultSet resultSet = null;
+//  private ResultSet execSelect(DataSource dataSource, String que){
+//    ResultSet resultSet;
+//    Statement statement;
+//    try {
+//      Connection connection = dataSource.getConnection();
+//      statement = connection.createStatement();
+//      resultSet = statement.executeQuery(que);
+//    } catch (SQLException e) {
+//      log.error(e.getMessage(), e);
+//      throw new RuntimeException(e.getMessage(), e);
+//    }
+//    return resultSet;
+//  }
+
+  private Object execSelect(DataSource dataSource, ResultSetHandler handler, String que){
+    Object result = null;
+    Connection connection = null;
     try {
-      Connection connection = dataSource.getConnection();
-      Statement statement = connection.createStatement();
-      resultSet = statement.executeQuery(que);
+      connection = dataSource.getConnection();
+      QueryRunner queryRunner = new QueryRunner();
+      result = queryRunner.query(connection, que, handler);
     } catch (SQLException e) {
       log.error(e.getMessage(), e);
-      throw new RuntimeException(e.getMessage(), e);
+    }finally {
+      closeConnection(connection);
     }
-    return resultSet;
+    return result;
+  }
+
+  private void closeConnection(Connection connection){
+    if(connection != null){
+      try {
+        DbUtils.close(connection);
+      } catch (SQLException e) {
+        log.error(e.getMessage(), e);
+      }
+    }
+  }
+
+  private ResultSetHandler<MlDatabase> getTableHandler(){
+    return new ResultSetHandler<MlDatabase>() {
+      @Override
+      public MlDatabase handle(ResultSet resultSet) throws SQLException {
+        MlDatabase mlDatabase = new MlDatabase();
+        while (resultSet.next()) {
+          MlTable mlTable = resultSetTableConvertor.toMetadata(resultSet);
+          mlDatabase.addTable(mlTable);
+        }
+        return mlDatabase;
+      }
+    };
+  }
+
+  private ResultSetHandler<List<MlColumn>> getColumnsHandler(){
+    return new ResultSetHandler<List<MlColumn>>() {
+      @Override
+      public List<MlColumn> handle(ResultSet resultSet) throws SQLException {
+        List<MlColumn> columns = Lists.newArrayList();
+        while (resultSet.next()) {
+          columns.add(resultSetColumnConvertor.toMetadata(resultSet));
+        }
+        return columns;
+      }
+    };
   }
 
   private String getDatabaseName(DataSource dataSource) throws SQLException {

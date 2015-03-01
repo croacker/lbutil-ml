@@ -1,6 +1,7 @@
 package ru.croacker.lbutil.database.convertor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.metadata.MlColumn;
 
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 /**
  *
  */
+@Service
 @Slf4j
 public class CommonResultSetColumnConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlColumn> {
   @Override

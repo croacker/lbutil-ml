@@ -43,4 +43,12 @@ public class MlTable {
   public List<MlColumn> getColumns() {
     return columns;
   }
+
+  public void addColumn(MlColumn mlColumn){
+    getColumns().add(mlColumn);
+  }
+
+  public void addColumns(List<MlColumn> mlColumns){
+    getColumns().addAll(mlColumns);
+  }
 }
