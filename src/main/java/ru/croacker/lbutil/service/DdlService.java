@@ -63,7 +63,7 @@ public class DdlService {
    * @return
    */
   public MlDatabase getMlDatabaseModel(DataSource dataSource){
-    MlDatabase mlDatabase = new MlDatabase();
+    MlDatabase mlDatabase = new MlDatabase(false);
     Database database = getDatabaseModel(dataSource);
     for(Table table:database.getTables()){//TODO Добавить упорядочивание, сначала должны идти Системные таблицы
       if(excludeTables.contains(table.getName())){
@@ -147,7 +147,7 @@ public class DdlService {
     return new ResultSetHandler<MlDatabase>() {
       @Override
       public MlDatabase handle(ResultSet resultSet) throws SQLException {
-        MlDatabase mlDatabase = new MlDatabase();
+        MlDatabase mlDatabase = new MlDatabase(true);
         while (resultSet.next()) {
           MlTable mlTable = resultSetTableConvertor.toMetadata(resultSet);
           mlDatabase.addTable(mlTable);

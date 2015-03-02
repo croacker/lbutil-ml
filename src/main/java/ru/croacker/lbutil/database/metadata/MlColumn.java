@@ -115,4 +115,8 @@ public class MlColumn {
   @Getter @Setter
   private String manyToManyFieldNameN;
 
+  //Строковое представление имени типа (String, Long и.т.д.)
+  @Getter @Setter
+  private String fieldTypeName;
+
 }

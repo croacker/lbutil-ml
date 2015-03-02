@@ -13,6 +13,13 @@ public class MlDatabase {
   @Getter
   private List<MlTable> tables = new ArrayList<>();
 
+  @Getter
+  private boolean isOriginal;
+
+  public MlDatabase(boolean isOriginal) {
+    this.isOriginal = isOriginal;
+  }
+
   public void addTable(MlTable mlTable){
     getTables().add(mlTable);
   }

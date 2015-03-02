@@ -66,7 +66,7 @@ public class ExportJavaClassesPanel  extends JPanel {
     );
   }
 
-  public String getFileName(){
+  public String getFolderName(){
     return jtfExportFolder.getText();
   }
 

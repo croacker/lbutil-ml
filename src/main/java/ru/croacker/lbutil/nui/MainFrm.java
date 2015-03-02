@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import ru.croacker.lbutil.database.DbConnectionDto;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
+import ru.croacker.lbutil.database.model.JavaClassModel;
 import ru.croacker.lbutil.nui.component.MainMenuBar;
 import ru.croacker.lbutil.nui.component.connection.ConnectionPanel;
 import ru.croacker.lbutil.nui.component.connection.ConnectionsListPanel;
@@ -25,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @author a_gumenyuk
@@ -52,6 +54,9 @@ public class MainFrm extends JFrame {
 
   @Autowired
   private FileWriteService fileWriteService;
+
+  @Autowired
+  private JavaClassService javaClassService;
 
   @Autowired
   @Getter
@@ -329,7 +334,30 @@ public class MainFrm extends JFrame {
   }
 
   private void exportJavaClasses() {
+    try {
+      DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
 
+      boolean readMlClass = false;
+      if (ddlService.mlClassExists(dataSource)) {
+        readMlClass = JOptionPane.showConfirmDialog(this,
+            "Обнаружена таблица MLClass, выполнить чтение классов из нее?",
+            "Таблица MLClass",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+      }
+
+      MlDatabase mlDatabase;
+      if (readMlClass) {
+        mlDatabase = ddlService.getMlDatabaseModelFromMlClass(dataSource);
+      } else {
+        mlDatabase = ddlService.getMlDatabaseModel(dataSource);
+      }
+      List<JavaClassModel> classes = javaClassService.formClasses(mlDatabase);
+      fileWriteService.writeClasses(classes, jpExportJavaClasses.getFolderName());
+      JOptionPane.showMessageDialog(this, "Экспорт успешно завершен!");
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      JOptionPane.showMessageDialog(null, e.getMessage());
+    }
   }
 
   private void saveConfiguration() {
