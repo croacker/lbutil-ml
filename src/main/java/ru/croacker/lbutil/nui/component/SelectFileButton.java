@@ -14,10 +14,17 @@ public class SelectFileButton extends JButton {
   private JTextComponent filenameField;
 
   private int dialogType;
+  private boolean directoiesOnly;
 
   public SelectFileButton(JTextComponent filenameField, int dialogType){
     this.filenameField = filenameField;
     this.dialogType = dialogType;
+    initComponents();
+  }
+  public SelectFileButton(JTextComponent filenameField, int dialogType, boolean directoiesOnly){
+    this.filenameField = filenameField;
+    this.dialogType = dialogType;
+    this.directoiesOnly = directoiesOnly;
     initComponents();
   }
 
@@ -42,16 +49,18 @@ public class SelectFileButton extends JButton {
     int rVal = -1;
     if(dialogType == JFileChooser.OPEN_DIALOG){
       rVal = fileChooser.showOpenDialog(getParent());
-    }else if(dialogType == JFileChooser.SAVE_DIALOG){
+    }else if(dialogType == JFileChooser.SAVE_DIALOG && !directoiesOnly){
       rVal = fileChooser.showSaveDialog(getParent());
-    }else if(dialogType == JFileChooser.DIRECTORIES_ONLY){
+    }else if(dialogType == JFileChooser.SAVE_DIALOG && directoiesOnly){
       fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
       rVal = fileChooser.showOpenDialog(getParent());
     }
 
     if (rVal == JFileChooser.APPROVE_OPTION) {
-      String fileName = fileChooser.getSelectedFile().getAbsolutePath()
-          + (fileChooser.getSelectedFile().getAbsolutePath().endsWith(".xml") ? "" : ".xml");
+      String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+      if(!directoiesOnly) {
+        fileName +=(fileChooser.getSelectedFile().getAbsolutePath().endsWith(".xml") ? "" : ".xml");
+      }
       filenameField.setText(fileName);
     }
   }

@@ -27,13 +27,13 @@ public class JavaClassService {
       if(mlDatabase.isOriginal()){
         fullClassName = mlTable.getJavaClass();
       }else {
-        fullClassName = DEFAULT_PACKAGE_NAME + mlTable.getEntityName();
+        fullClassName = DEFAULT_PACKAGE_NAME + "." + mlTable.getEntityName();
       }
 
       if(!StringUtils.isEmpty(fullClassName)) {
         JavaClassModel javaClassModel = new JavaClassModel(fullClassName);
         for (MlColumn mlColumn : mlTable.getColumns()) {
-          javaClassModel.addField(mlColumn.getEntityFieldName(), mlColumn.getFieldType());
+          javaClassModel.addField(mlColumn.getEntityFieldName(), mlColumn.getFieldTypeName());
         }
         classes.add(javaClassModel);
       }

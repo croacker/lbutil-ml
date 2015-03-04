@@ -59,14 +59,42 @@ public class CommonResultSetMlColumnConvertor extends ResultSetConvertor impleme
     mlColumn.setUseInSimpleSearch(getBoolean(resultSet, "useInSimpleSearch"));
     mlColumn.setUseInExtendedSearch(getBoolean(resultSet, "useInExtendedSearch"));
     mlColumn.setSystemField(getBoolean(resultSet, "systemField"));
-//    mlColumn.setFieldFormat(null);
-//    mlColumn.setGroup(null);
+
+    mlColumn.setFieldTypeName(getFieldTypeName(mlColumn.getFieldType()));
     return mlColumn;
   }
 
   @Override
   public ResultSet toTable(MlColumn metadata) {
     return null;
+  }
+
+  /**
+   * Имя поля для создания классов
+   * @param fieldType
+   * @return
+   */
+  private String getFieldTypeName(String fieldType) {
+    if(fieldType.equals("STRING")){
+      return "String";
+    }else if(fieldType.equals("LONG")){
+      return "Long";
+    }else if(fieldType.equals("FILE")){
+      return "byte[]";
+    }else if(fieldType.equals("BOOLEAN")){
+      return "Boolean";
+    }else if(fieldType.equals("DATE")){
+      return "Date";
+    }else if(fieldType.equals("ENUM")){
+      return "String";
+    }else if(fieldType.equals("DOUBLE")){
+      return "Double";
+    }else if(fieldType.equals("TEXT")){
+      return "Clob";
+    }
+    //Для "MANY_TO_ONE" указывается linkClass
+    //Для "ONE_TO_MANY" указывается linkAttr
+    return fieldType;
   }
 
 }

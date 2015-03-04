@@ -15,6 +15,7 @@ public class JavaClassFieldModel {
   @Getter
   private String typeName;
   //Имя для формирования акцессоров
+  @Getter
   private String accessorName;
 
   public JavaClassFieldModel(String tabbleFieldName, String typeName){
@@ -26,7 +27,7 @@ public class JavaClassFieldModel {
   private void init() {
     CaseFormat caseFormat = getCaseFormat();
     constantName = caseFormat.to(CaseFormat.UPPER_UNDERSCORE, tabbleFieldName);
-    accessorName = caseFormat.to(CaseFormat.LOWER_CAMEL, tabbleFieldName);
+    accessorName = caseFormat.to(CaseFormat.UPPER_CAMEL, tabbleFieldName);
   }
 
   private CaseFormat getCaseFormat(){

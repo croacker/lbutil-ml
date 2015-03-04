@@ -11,48 +11,66 @@ import ru.croacker.lbutil.database.metadata.MlColumn;
 @Service
 public class CommonColumnConvertor implements Convertor<Column, MlColumn> {
 
-    @Override
-    public MlColumn toMetadata(Column column) {
-        MlColumn mlColumn = new MlColumn();
-        mlColumn.setTableFieldName(column.getName());
-        mlColumn.setEntityFieldName(column.getName());
-        mlColumn.setSystemField(false);
-        mlColumn.setPrimaryKey(column.isPrimaryKey());
-        mlColumn.setAutoIncrement(column.isAutoIncrement());
-        mlColumn.setFieldType(getFieldType(column));
-        mlColumn.setLinkAttr(null);
-        mlColumn.setMlClass(null);
-        mlColumn.setLinkClass(null);
-        mlColumn.setLinkFilter(null);
-        mlColumn.setInForm(true);
-        mlColumn.setUseInSimpleSearch(true);
-        mlColumn.setUseInExtendedSearch(true);
-        mlColumn.setFieldFormat(null);
-        mlColumn.setGroup(null);
-        mlColumn.setDescription(getDescription(column));
-        mlColumn.setDefaultValue(column.getDefaultValue());
-        mlColumn.setVirtual(false);
-        mlColumn.setLongLinkValue(null);
-        mlColumn.setReadOnly(false);
-        return mlColumn;
+  @Override
+  public MlColumn toMetadata(Column column) {
+    MlColumn mlColumn = new MlColumn();
+    mlColumn.setTableFieldName(column.getName());
+    mlColumn.setEntityFieldName(column.getName());
+    mlColumn.setSystemField(false);
+    mlColumn.setPrimaryKey(column.isPrimaryKey());
+    mlColumn.setAutoIncrement(column.isAutoIncrement());
+    mlColumn.setFieldType(getFieldType(column));
+    mlColumn.setLinkAttr(null);
+    mlColumn.setMlClass(null);
+    mlColumn.setLinkClass(null);
+    mlColumn.setLinkFilter(null);
+    mlColumn.setInForm(true);
+    mlColumn.setUseInSimpleSearch(true);
+    mlColumn.setUseInExtendedSearch(true);
+    mlColumn.setFieldFormat(null);
+    mlColumn.setGroup(null);
+    mlColumn.setDescription(getDescription(column));
+    mlColumn.setDefaultValue(column.getDefaultValue());
+    mlColumn.setVirtual(false);
+    mlColumn.setLongLinkValue(null);
+    mlColumn.setReadOnly(false);
+
+    mlColumn.setFieldTypeName(getFieldTypeName(mlColumn.getFieldType()));
+    return mlColumn;
+  }
+
+  @Override
+  public Column toTable(MlColumn mlColumn) {
+    Column column = new Column();
+
+    return column;
+  }
+
+  private String getFieldType(Column column) {
+    if(column.isOfTextType()){
+      return "STRING";
+    }else if(column.isOfNumericType()){
+      return "LONG";
+    }else if(column.isOfBinaryType()){
+      return "FILE";
     }
 
-    @Override
-    public Column toTable(MlColumn mlColumn) {
-        Column column = new Column();
+    return "STRING";
+  }
 
-        return column;
+  private String getFieldTypeName(String fieldType) {
+    if(fieldType.equals("STRING")){
+      return "String";
+    }else if(fieldType.equals("LONG")){
+      return "Long";
+    }else if(fieldType.equals("FILE")){
+      return "byte[]";
     }
+    return "String";
+  }
 
-    private String getFieldType(Column column) {
-        return "STRING";
-//                LONG(Long.class),
-//                BOOLEAN(Boolean.class),
-//                DATE(Timestamp.class),
-    }
-
-    private String getDescription(Column column){
-        return StringUtils.isEmpty(column.getDescription()) ? column.getName() : column.getDescription();
-    }
+  private String getDescription(Column column) {
+    return StringUtils.isEmpty(column.getDescription()) ? column.getName() : column.getDescription();
+  }
 
 }

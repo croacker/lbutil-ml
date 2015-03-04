@@ -75,7 +75,7 @@ public class ExportJavaClassesPanel  extends JPanel {
   }
 
   private JButton getSelectFileButton(JTextComponent filenameVisualizer){
-    return new SelectFileButton(filenameVisualizer, JFileChooser.DIRECTORIES_ONLY);
+    return new SelectFileButton(filenameVisualizer, JFileChooser.SAVE_DIALOG, true);
   }
 
 }
