@@ -1,5 +1,6 @@
 package ru.croacker.lbutil;
 
+import com.alee.laf.WebLookAndFeel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.croacker.lbutil.nui.MainFrm;
@@ -32,11 +33,12 @@ public class LbUtilApp implements Runnable {
   }
 
   private static void initLookAndFeel() {
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (ClassNotFoundException|InstantiationException|IllegalAccessException|UnsupportedLookAndFeelException e) {
-      log.error(e.getMessage(), e);
-    }
+//    try {
+//      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//    } catch (ClassNotFoundException|InstantiationException|IllegalAccessException|UnsupportedLookAndFeelException e) {
+//      log.error(e.getMessage(), e);
+//    }
+      WebLookAndFeel.install();
   }
 
   public void close() {
