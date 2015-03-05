@@ -33,11 +33,6 @@ public class LbUtilApp implements Runnable {
   }
 
   private static void initLookAndFeel() {
-//    try {
-//      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//    } catch (ClassNotFoundException|InstantiationException|IllegalAccessException|UnsupportedLookAndFeelException e) {
-//      log.error(e.getMessage(), e);
-//    }
       WebLookAndFeel.install();
   }
 
