@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import ru.croacker.lbutil.database.metadata.MlColumn;
+import ru.croacker.lbutil.database.metadata.MlAttr;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
-import ru.croacker.lbutil.database.metadata.MlTable;
+import ru.croacker.lbutil.database.metadata.MlClass;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,7 +32,7 @@ public class MetadataLiquibaseService {
     root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd");
     document.appendChild(root);
 
-    for (MlTable mlTable : mlDatabase.getTables()) {
+    for (MlClass mlTable : mlDatabase.getTables()) {
       Long tableId = idForTable(mlDatabase, mlTable);
       Element changeSet = document.createElement("changeSet");
       changeSet.setAttribute("id", "ts_" + String.valueOf(new Date().getTime()) + String.valueOf(tableId)); //todo: generate
@@ -40,8 +40,8 @@ public class MetadataLiquibaseService {
 
       changeSet.appendChild(createInsertClass(document, mlTable, tableId));
 
-      for (MlColumn mlColumn : mlTable.getColumns()) {
-        changeSet.appendChild(createInsertAttr(document, mlColumn, tableId));
+      for (MlAttr mlAttr : mlTable.getColumns()) {
+        changeSet.appendChild(createInsertAttr(document, mlAttr, tableId));
       }
       root.appendChild(changeSet);
     }
@@ -49,7 +49,7 @@ public class MetadataLiquibaseService {
     return document;
   }
 
-  private Long idForTable(MlDatabase mlDatabase, MlTable mlTable) {
+  private Long idForTable(MlDatabase mlDatabase, MlClass mlTable) {
     Long id = mlTable.getId();
     if (id == null) {
       id = Long.valueOf(mlDatabase.getTables().indexOf(mlTable));
@@ -64,7 +64,7 @@ public class MetadataLiquibaseService {
    * @param mlTable
    * @return
    */
-  private Element createInsertClass(Document document, MlTable mlTable, Long tableId) {
+  private Element createInsertClass(Document document, MlClass mlTable, Long tableId) {
     Element insertClass = document.createElement("insert");
     insertClass.setAttribute("tableName", "MlClass");
 
@@ -120,10 +120,10 @@ public class MetadataLiquibaseService {
    * Создать элемент добавления записи в таблицу атрибутов
    *
    * @param document
-   * @param mlColumn
+   * @param mlAttr
    * @return
    */
-  private Element createInsertAttr(Document document, MlColumn mlColumn, Long tableId) {
+  private Element createInsertAttr(Document document, MlAttr mlAttr, Long tableId) {
 
     Element insertAttr = document.createElement("insert");
     insertAttr.setAttribute("tableName", "MlAttr");
@@ -135,242 +135,242 @@ public class MetadataLiquibaseService {
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "tableFieldName");
-    columnData.setAttribute("value", mlColumn.getTableFieldName());
+    columnData.setAttribute("value", mlAttr.getTableFieldName());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "entityFieldName");
-    columnData.setAttribute("value", mlColumn.getEntityFieldName());
+    columnData.setAttribute("value", mlAttr.getEntityFieldName());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "systemField");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getSystemField()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getSystemField()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "primaryKey");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getPrimaryKey()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getPrimaryKey()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "autoIncrement");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getAutoIncrement()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getAutoIncrement()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "fieldType");
-    columnData.setAttribute("value", mlColumn.getFieldType());
+    columnData.setAttribute("value", mlAttr.getFieldType());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "linkAttr");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getLinkAttr()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getLinkAttr()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "linkClass");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getLinkClass()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getLinkClass()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "linkFilter");
-    columnData.setAttribute("value", mlColumn.getLinkFilter());
+    columnData.setAttribute("value", mlAttr.getLinkFilter());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "inForm");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getInForm()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getInForm()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "inList");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getInList()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getInList()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "useInSimpleSearch");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getUseInSimpleSearch()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getUseInSimpleSearch()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "useInExtendedSearch");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getUseInExtendedSearch()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getUseInExtendedSearch()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "fieldFormat");
-    columnData.setAttribute("value", mlColumn.getFieldFormat());
+    columnData.setAttribute("value", mlAttr.getFieldFormat());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "group");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getGroup()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getGroup()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "description");
-    columnData.setAttribute("value", mlColumn.getDescription());
+    columnData.setAttribute("value", mlAttr.getDescription());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "viewPos");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getViewPos()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getViewPos()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "newLine");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNewLine()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNewLine()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "offset");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getOffset()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getOffset()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "totalLength");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getTotalLength()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getTotalLength()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "titleLength");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getTitleLength()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getTitleLength()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "tableHeight");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getTableHeight()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getTableHeight()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "mandatory");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getMandatory()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getMandatory()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "replicationType");
-    columnData.setAttribute("value", mlColumn.getReplicationType());
+    columnData.setAttribute("value", mlAttr.getReplicationType());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "defaultValue");
-    columnData.setAttribute("value", mlColumn.getDefaultValue());
+    columnData.setAttribute("value", mlAttr.getDefaultValue());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "lazy");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getLazy()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getLazy()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "lazy");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getView()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getView()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "templateView");
-    columnData.setAttribute("value", mlColumn.getTemplateView());
+    columnData.setAttribute("value", mlAttr.getTemplateView());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "templateEdit");
-    columnData.setAttribute("value", mlColumn.getTemplateEdit());
+    columnData.setAttribute("value", mlAttr.getTemplateEdit());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "templateCreate");
-    columnData.setAttribute("value", mlColumn.getTemplateCreate());
+    columnData.setAttribute("value", mlAttr.getTemplateCreate());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "inputmask");
-    columnData.setAttribute("value", mlColumn.getInputmask());
+    columnData.setAttribute("value", mlAttr.getInputmask());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "defaultSqlValue");
-    columnData.setAttribute("value", mlColumn.getDefaultSqlValue());
+    columnData.setAttribute("value", mlAttr.getDefaultSqlValue());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "virtual");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getVirtual()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getVirtual()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "longLinkValue");
-    columnData.setAttribute("value", mlColumn.getLongLinkValue());
+    columnData.setAttribute("value", mlAttr.getLongLinkValue());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "readOnly");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getReadOnly()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getReadOnly()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "ordered");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getOrdered()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getOrdered()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "mlClass_order");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getMlClass_order()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getMlClass_order()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowCreate");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowCreate()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowCreate()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowDelete");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowDelete()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowDelete()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowChoose");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowChoose()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowChoose()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowEdit");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowEdit()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowEdit()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowCreateInEdit");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowCreateInEdit()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowCreateInEdit()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowEditInEdit");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowEditInEdit()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowEditInEdit()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowChooseInEdit");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowChooseInEdit()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowChooseInEdit()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "notShowDeleteInEdit");
-    columnData.setAttribute("value", String.valueOf(mlColumn.getNotShowDeleteInEdit()));
+    columnData.setAttribute("value", String.valueOf(mlAttr.getNotShowDeleteInEdit()));
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "manyToManyTableName");
-    columnData.setAttribute("value", mlColumn.getManyToManyTableName());
+    columnData.setAttribute("value", mlAttr.getManyToManyTableName());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "manyToManyFieldNameM");
-    columnData.setAttribute("value", mlColumn.getManyToManyFieldNameM());
+    columnData.setAttribute("value", mlAttr.getManyToManyFieldNameM());
     insertAttr.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "manyToManyFieldNameN");
-    columnData.setAttribute("value", mlColumn.getManyToManyFieldNameN());
+    columnData.setAttribute("value", mlAttr.getManyToManyFieldNameN());
     insertAttr.appendChild(columnData);
 
     return insertAttr;

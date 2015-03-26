@@ -3,44 +3,44 @@ package ru.croacker.lbutil.database.convertor;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ddlutils.model.Column;
 import org.springframework.stereotype.Service;
-import ru.croacker.lbutil.database.metadata.MlColumn;
+import ru.croacker.lbutil.database.metadata.MlAttr;
 
 /**
  * Конвертер для колонки
  */
 @Service
-public class CommonColumnConvertor implements Convertor<Column, MlColumn> {
+public class CommonColumnConvertor implements Convertor<Column, MlAttr> {
 
   @Override
-  public MlColumn toMetadata(Column column) {
-    MlColumn mlColumn = new MlColumn();
-    mlColumn.setTableFieldName(column.getName());
-    mlColumn.setEntityFieldName(column.getName());
-    mlColumn.setSystemField(false);
-    mlColumn.setPrimaryKey(column.isPrimaryKey());
-    mlColumn.setAutoIncrement(column.isAutoIncrement());
-    mlColumn.setFieldType(getFieldType(column));
-    mlColumn.setLinkAttr(null);
-    mlColumn.setMlClass(null);
-    mlColumn.setLinkClass(null);
-    mlColumn.setLinkFilter(null);
-    mlColumn.setInForm(true);
-    mlColumn.setUseInSimpleSearch(true);
-    mlColumn.setUseInExtendedSearch(true);
-    mlColumn.setFieldFormat(null);
-    mlColumn.setGroup(null);
-    mlColumn.setDescription(getDescription(column));
-    mlColumn.setDefaultValue(column.getDefaultValue());
-    mlColumn.setVirtual(false);
-    mlColumn.setLongLinkValue(null);
-    mlColumn.setReadOnly(false);
+  public MlAttr toMetadata(Column column) {
+    MlAttr mlAttr = new MlAttr();
+    mlAttr.setTableFieldName(column.getName());
+    mlAttr.setEntityFieldName(column.getName());
+    mlAttr.setSystemField(false);
+    mlAttr.setPrimaryKey(column.isPrimaryKey());
+    mlAttr.setAutoIncrement(column.isAutoIncrement());
+    mlAttr.setFieldType(getFieldType(column));
+    mlAttr.setLinkAttr(null);
+    mlAttr.setMlClass(null);
+    mlAttr.setLinkClass(null);
+    mlAttr.setLinkFilter(null);
+    mlAttr.setInForm(true);
+    mlAttr.setUseInSimpleSearch(true);
+    mlAttr.setUseInExtendedSearch(true);
+    mlAttr.setFieldFormat(null);
+    mlAttr.setGroup(null);
+    mlAttr.setDescription(getDescription(column));
+    mlAttr.setDefaultValue(column.getDefaultValue());
+    mlAttr.setVirtual(false);
+    mlAttr.setLongLinkValue(null);
+    mlAttr.setReadOnly(false);
 
-    mlColumn.setFieldTypeName(getFieldTypeName(mlColumn.getFieldType()));
-    return mlColumn;
+    mlAttr.setFieldTypeName(getFieldTypeName(mlAttr.getFieldType()));
+    return mlAttr;
   }
 
   @Override
-  public Column toTable(MlColumn mlColumn) {
+  public Column toTable(MlAttr mlAttr) {
     Column column = new Column();
 
     return column;

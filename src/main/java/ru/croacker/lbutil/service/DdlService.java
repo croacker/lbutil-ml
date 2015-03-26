@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.convertor.CommonResultSetMlColumnConvertor;
 import ru.croacker.lbutil.database.convertor.CommonResultSetMlTableConvertor;
 import ru.croacker.lbutil.database.convertor.CommonTableConvertor;
-import ru.croacker.lbutil.database.metadata.MlColumn;
+import ru.croacker.lbutil.database.metadata.MlAttr;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
-import ru.croacker.lbutil.database.metadata.MlTable;
+import ru.croacker.lbutil.database.metadata.MlClass;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -98,9 +98,9 @@ public class DdlService {
    */
   public MlDatabase getMlDatabaseModelFromMlClass(DataSource dataSource){
     MlDatabase mlDatabase = (MlDatabase) execSelect(dataSource, getTableHandler(), "select * from \"MlClass\"");
-    for (MlTable mlTable:mlDatabase.getTables()){
+    for (MlClass mlTable:mlDatabase.getTables()){
       mlTable.addColumns(
-          (List<MlColumn>) execSelect(dataSource, getColumnsHandler(),
+          (List<MlAttr>) execSelect(dataSource, getColumnsHandler(),
               "select * from \"MlAttr\" where \"mlClass\" = " + mlTable.getId())
       );
     }
@@ -149,7 +149,7 @@ public class DdlService {
       public MlDatabase handle(ResultSet resultSet) throws SQLException {
         MlDatabase mlDatabase = new MlDatabase(true);
         while (resultSet.next()) {
-          MlTable mlTable = resultSetTableConvertor.toMetadata(resultSet);
+          MlClass mlTable = resultSetTableConvertor.toMetadata(resultSet);
           mlDatabase.addTable(mlTable);
         }
         return mlDatabase;
@@ -161,11 +161,11 @@ public class DdlService {
    * Хендлер для получения колонок
    * @return
    */
-  private ResultSetHandler<List<MlColumn>> getColumnsHandler(){
-    return new ResultSetHandler<List<MlColumn>>() {
+  private ResultSetHandler<List<MlAttr>> getColumnsHandler(){
+    return new ResultSetHandler<List<MlAttr>>() {
       @Override
-      public List<MlColumn> handle(ResultSet resultSet) throws SQLException {
-        List<MlColumn> columns = Lists.newArrayList();
+      public List<MlAttr> handle(ResultSet resultSet) throws SQLException {
+        List<MlAttr> columns = Lists.newArrayList();
         while (resultSet.next()) {
           columns.add(resultSetColumnConvertor.toMetadata(resultSet));
         }

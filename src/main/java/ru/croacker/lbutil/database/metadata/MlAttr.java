@@ -8,10 +8,8 @@ import java.util.Date;
 /**
  *
  */
-public class MlColumn {
+public class MlAttr extends MlUnit {
 
-  @Getter @Setter
-  private Long id;
   @Getter @Setter
   private String entityFieldName;
   @Getter @Setter

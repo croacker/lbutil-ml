@@ -1,7 +1,7 @@
 package ru.croacker.lbutil.service;
 
 import ru.croacker.lbutil.database.metadata.MlDatabase;
-import ru.croacker.lbutil.database.metadata.MlTable;
+import ru.croacker.lbutil.database.metadata.MlClass;
 
 /**
  * Сервис экспорта Ml-классов в Java-классы
@@ -9,7 +9,7 @@ import ru.croacker.lbutil.database.metadata.MlTable;
 public class MetadataJavaClassService {
 
   public void formClasses(MlDatabase mlDatabase){
-    for (MlTable mlTable : mlDatabase.getTables()) {
+    for (MlClass mlTable : mlDatabase.getTables()) {
 
     }
   }

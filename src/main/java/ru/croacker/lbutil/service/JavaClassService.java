@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
-import ru.croacker.lbutil.database.metadata.MlColumn;
+import ru.croacker.lbutil.database.metadata.MlAttr;
 import ru.croacker.lbutil.database.metadata.MlDatabase;
-import ru.croacker.lbutil.database.metadata.MlTable;
+import ru.croacker.lbutil.database.metadata.MlClass;
 import ru.croacker.lbutil.database.model.JavaClassModel;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class JavaClassService {
 
   public List<JavaClassModel> formClasses(MlDatabase mlDatabase){
     List<JavaClassModel> classes = Lists.newArrayList();
-    for (MlTable mlTable:mlDatabase.getTables()){
+    for (MlClass mlTable:mlDatabase.getTables()){
       String fullClassName;
       if(mlDatabase.isOriginal()){
         fullClassName = mlTable.getJavaClass();
@@ -32,8 +32,8 @@ public class JavaClassService {
 
       if(!StringUtils.isEmpty(fullClassName)) {
         JavaClassModel javaClassModel = new JavaClassModel(fullClassName);
-        for (MlColumn mlColumn : mlTable.getColumns()) {
-          javaClassModel.addField(mlColumn.getEntityFieldName(), mlColumn.getFieldTypeName());
+        for (MlAttr mlAttr : mlTable.getColumns()) {
+          javaClassModel.addField(mlAttr.getEntityFieldName(), mlAttr.getFieldTypeName());
         }
         classes.add(javaClassModel);
       }

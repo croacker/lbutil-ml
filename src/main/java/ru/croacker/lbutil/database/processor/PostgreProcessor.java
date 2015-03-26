@@ -1,6 +1,6 @@
 package ru.croacker.lbutil.database.processor;
 
-import ru.croacker.lbutil.database.metadata.MlTable;
+import ru.croacker.lbutil.database.metadata.MlClass;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 public class PostgreProcessor extends CommonProcessor {
 
   @Override
-  public Map<String, MlTable> readTables() {
+  public Map<String, MlClass> readTables() {
     return null;
   }
 }

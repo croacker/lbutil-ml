@@ -10,18 +10,21 @@ import java.util.List;
  */
 public class MlDatabase {
 
-  @Getter
-  private List<MlTable> tables = new ArrayList<>();
+    @Getter
+    private List<MlClass> mlClasses = new ArrayList<>();
 
-  @Getter
-  private boolean isOriginal;
+    @Getter
+    private List<MlClass> tables = new ArrayList<>();
 
-  public MlDatabase(boolean isOriginal) {
-    this.isOriginal = isOriginal;
-  }
+    @Getter
+    private boolean isOriginal;
 
-  public void addTable(MlTable mlTable){
-    getTables().add(mlTable);
-  }
+    public MlDatabase(boolean isOriginal) {
+        this.isOriginal = isOriginal;
+    }
+
+    public void addTable(MlClass mlTable) {
+        getTables().add(mlTable);
+    }
 
 }

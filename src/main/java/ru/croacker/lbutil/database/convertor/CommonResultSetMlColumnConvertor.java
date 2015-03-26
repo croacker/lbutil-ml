@@ -2,7 +2,7 @@ package ru.croacker.lbutil.database.convertor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.croacker.lbutil.database.metadata.MlColumn;
+import ru.croacker.lbutil.database.metadata.MlAttr;
 
 import java.sql.ResultSet;
 
@@ -11,61 +11,61 @@ import java.sql.ResultSet;
  */
 @Service
 @Slf4j
-public class CommonResultSetMlColumnConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlColumn> {
+public class CommonResultSetMlColumnConvertor extends ResultSetConvertor implements Convertor<ResultSet, MlAttr> {
   @Override
-  public MlColumn toMetadata(ResultSet resultSet) {
-    MlColumn mlColumn = new MlColumn();
-    mlColumn.setId(getLong(resultSet, "id"));
-    mlColumn.setTableFieldName(getString(resultSet, "tableFieldName"));
-    mlColumn.setEntityFieldName(getString(resultSet, "entityFieldName"));
-    mlColumn.setFieldType(getString(resultSet, "fieldType"));
-    mlColumn.setReplicationType(getString(resultSet, "replicationType"));
-    mlColumn.setGuid(getString(resultSet, "guid"));
-    mlColumn.setLastChange(getDate(resultSet, "lastChange"));
-    mlColumn.setVirtual(getBoolean(resultSet, "virtual"));
-    mlColumn.setOrdered(getBoolean(resultSet, "ordered"));
-    mlColumn.setDescription(getString(resultSet, "description"));
-    mlColumn.setDefaultValue(getString(resultSet, "defaultValue"));
-    mlColumn.setLongLinkValue(getString(resultSet, "longLinkValue"));
-    mlColumn.setManyToManyTableName(getString(resultSet, "manyToManyTableName"));
-    mlColumn.setManyToManyFieldNameM(getString(resultSet, "manyToManyFieldNameM"));
-    mlColumn.setManyToManyFieldNameN(getString(resultSet, "manyToManyFieldNameN"));
-    mlColumn.setNotShowCreate(getBoolean(resultSet, "notShowCreate"));
-    mlColumn.setNotShowChoose(getBoolean(resultSet, "notShowChoose"));
-    mlColumn.setNotShowEdit(getBoolean(resultSet, "notShowEdit"));
-    mlColumn.setNotShowDelete(getBoolean(resultSet, "notShowDelete"));
-    mlColumn.setNotShowCreateInEdit(getBoolean(resultSet, "notShowCreateInEdit"));
-    mlColumn.setNotShowChooseInEdit(getBoolean(resultSet, "notShowChooseInEdit"));
-    mlColumn.setNotShowEditInEdit(getBoolean(resultSet, "notShowEditInEdit"));
-    mlColumn.setNotShowDeleteInEdit(getBoolean(resultSet, "notShowDeleteInEdit"));
-    mlColumn.setNewLine(getBoolean(resultSet, "newLine"));
-    mlColumn.setViewPos(getLong(resultSet, "viewPos"));
-    mlColumn.setOffset(getLong(resultSet, "offset"));
-    mlColumn.setTotalLength(getLong(resultSet, "totalLength"));
-    mlColumn.setTitleLength(getLong(resultSet, "titleLength"));
-    mlColumn.setTableHeight(getLong(resultSet, "tableHeight"));
-    mlColumn.setMandatory(getBoolean(resultSet, "mandatory"));
-    mlColumn.setInputmask(getString(resultSet, "inputmask"));
-    mlColumn.setReadOnly(getBoolean(resultSet, "readOnly"));
-    mlColumn.setTemplateView(getString(resultSet, "templateView"));
-    mlColumn.setTemplateEdit(getString(resultSet, "templateEdit"));
-    mlColumn.setTemplateCreate(getString(resultSet, "templateCreate"));
-    mlColumn.setPrimaryKey(getBoolean(resultSet, "primaryKey"));
-    mlColumn.setAutoIncrement(getBoolean(resultSet, "autoIncrement"));
-    mlColumn.setLinkAttr(getLong(resultSet, "linkAttr"));
-    mlColumn.setMlClass(getLong(resultSet, "mlClass"));
-    mlColumn.setLinkClass(getLong(resultSet, "linkClass"));
-    mlColumn.setDefaultSqlValue(getString(resultSet, "defaultSqlValue"));
-    mlColumn.setUseInSimpleSearch(getBoolean(resultSet, "useInSimpleSearch"));
-    mlColumn.setUseInExtendedSearch(getBoolean(resultSet, "useInExtendedSearch"));
-    mlColumn.setSystemField(getBoolean(resultSet, "systemField"));
+  public MlAttr toMetadata(ResultSet resultSet) {
+    MlAttr mlAttr = new MlAttr();
+    mlAttr.setId(getLong(resultSet, "id"));
+    mlAttr.setTableFieldName(getString(resultSet, "tableFieldName"));
+    mlAttr.setEntityFieldName(getString(resultSet, "entityFieldName"));
+    mlAttr.setFieldType(getString(resultSet, "fieldType"));
+    mlAttr.setReplicationType(getString(resultSet, "replicationType"));
+    mlAttr.setGuid(getString(resultSet, "guid"));
+    mlAttr.setLastChange(getDate(resultSet, "lastChange"));
+    mlAttr.setVirtual(getBoolean(resultSet, "virtual"));
+    mlAttr.setOrdered(getBoolean(resultSet, "ordered"));
+    mlAttr.setDescription(getString(resultSet, "description"));
+    mlAttr.setDefaultValue(getString(resultSet, "defaultValue"));
+    mlAttr.setLongLinkValue(getString(resultSet, "longLinkValue"));
+    mlAttr.setManyToManyTableName(getString(resultSet, "manyToManyTableName"));
+    mlAttr.setManyToManyFieldNameM(getString(resultSet, "manyToManyFieldNameM"));
+    mlAttr.setManyToManyFieldNameN(getString(resultSet, "manyToManyFieldNameN"));
+    mlAttr.setNotShowCreate(getBoolean(resultSet, "notShowCreate"));
+    mlAttr.setNotShowChoose(getBoolean(resultSet, "notShowChoose"));
+    mlAttr.setNotShowEdit(getBoolean(resultSet, "notShowEdit"));
+    mlAttr.setNotShowDelete(getBoolean(resultSet, "notShowDelete"));
+    mlAttr.setNotShowCreateInEdit(getBoolean(resultSet, "notShowCreateInEdit"));
+    mlAttr.setNotShowChooseInEdit(getBoolean(resultSet, "notShowChooseInEdit"));
+    mlAttr.setNotShowEditInEdit(getBoolean(resultSet, "notShowEditInEdit"));
+    mlAttr.setNotShowDeleteInEdit(getBoolean(resultSet, "notShowDeleteInEdit"));
+    mlAttr.setNewLine(getBoolean(resultSet, "newLine"));
+    mlAttr.setViewPos(getLong(resultSet, "viewPos"));
+    mlAttr.setOffset(getLong(resultSet, "offset"));
+    mlAttr.setTotalLength(getLong(resultSet, "totalLength"));
+    mlAttr.setTitleLength(getLong(resultSet, "titleLength"));
+    mlAttr.setTableHeight(getLong(resultSet, "tableHeight"));
+    mlAttr.setMandatory(getBoolean(resultSet, "mandatory"));
+    mlAttr.setInputmask(getString(resultSet, "inputmask"));
+    mlAttr.setReadOnly(getBoolean(resultSet, "readOnly"));
+    mlAttr.setTemplateView(getString(resultSet, "templateView"));
+    mlAttr.setTemplateEdit(getString(resultSet, "templateEdit"));
+    mlAttr.setTemplateCreate(getString(resultSet, "templateCreate"));
+    mlAttr.setPrimaryKey(getBoolean(resultSet, "primaryKey"));
+    mlAttr.setAutoIncrement(getBoolean(resultSet, "autoIncrement"));
+    mlAttr.setLinkAttr(getLong(resultSet, "linkAttr"));
+    mlAttr.setMlClass(getLong(resultSet, "mlClass"));
+    mlAttr.setLinkClass(getLong(resultSet, "linkClass"));
+    mlAttr.setDefaultSqlValue(getString(resultSet, "defaultSqlValue"));
+    mlAttr.setUseInSimpleSearch(getBoolean(resultSet, "useInSimpleSearch"));
+    mlAttr.setUseInExtendedSearch(getBoolean(resultSet, "useInExtendedSearch"));
+    mlAttr.setSystemField(getBoolean(resultSet, "systemField"));
 
-    mlColumn.setFieldTypeName(getFieldTypeName(mlColumn.getFieldType()));
-    return mlColumn;
+    mlAttr.setFieldTypeName(getFieldTypeName(mlAttr.getFieldType()));
+    return mlAttr;
   }
 
   @Override
-  public ResultSet toTable(MlColumn metadata) {
+  public ResultSet toTable(MlAttr metadata) {
     return null;
   }
 

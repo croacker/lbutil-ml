@@ -9,10 +9,8 @@ import java.util.List;
 /**
  *
  */
-public class MlTable {
+public class MlClass extends MlUnit {
 
-  @Getter @Setter
-  private Long id;
   @Getter @Setter
   private String entityName;
   @Getter @Setter
@@ -38,17 +36,17 @@ public class MlTable {
   @Getter @Setter
   private String replicationHandlerClassName;
 
-  private List<MlColumn> columns = new ArrayList<>();
+  private List<MlAttr> columns = new ArrayList<>();
 
-  public List<MlColumn> getColumns() {
+  public List<MlAttr> getColumns() {
     return columns;
   }
 
-  public void addColumn(MlColumn mlColumn){
-    getColumns().add(mlColumn);
+  public void addColumn(MlAttr mlAttr){
+    getColumns().add(mlAttr);
   }
 
-  public void addColumns(List<MlColumn> mlColumns){
-    getColumns().addAll(mlColumns);
+  public void addColumns(List<MlAttr> mlAttrs){
+    getColumns().addAll(mlAttrs);
   }
 }
