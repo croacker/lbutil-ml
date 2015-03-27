@@ -9,29 +9,4 @@ import java.util.Date;
  *
  */
 public class MlAttrView extends MlUnit {
-
-    @Getter
-    @Setter
-    private String title;
-
-    @Getter
-    @Setter
-    private String code;
-
-    @Getter
-    @Setter
-    private String templateName;
-
-    @Getter
-    @Setter
-    private String attrType;
-
-    @Getter
-    @Setter
-    private String guid;
-
-    @Getter
-    @Setter
-    private Date lastChange;
-
 }

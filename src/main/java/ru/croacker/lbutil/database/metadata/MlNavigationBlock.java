@@ -7,9 +7,4 @@ import lombok.Setter;
  *
  */
 public class MlNavigationBlock extends MlUnit  {
-
-    @Getter
-    @Setter
-    private Long parentMlAttr;
-
 }

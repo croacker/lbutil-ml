@@ -10,28 +10,4 @@ import java.util.Date;
  */
 public class MlAttrGroup extends MlUnit {
 
-    @Getter
-    @Setter
-    private String title;
-
-    @Getter
-    @Setter
-    private Long linkedClass;
-
-    @Getter
-    @Setter
-    private Long parent;
-
-    @Getter
-    @Setter
-    private String guid;
-
-    @Getter
-    @Setter
-    private Date lastChange;
-
-    @Getter
-    @Setter
-    private Long linkedClass_order;
-
 }
