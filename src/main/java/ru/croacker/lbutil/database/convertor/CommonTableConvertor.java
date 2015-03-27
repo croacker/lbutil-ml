@@ -18,25 +18,25 @@ public class CommonTableConvertor implements Convertor<Table, MlClass> {
 
     @Override
     public MlClass toMetadata(Table table) {
-        MlClass mlTable = new MlClass();
-        mlTable.setTableName(table.getName());
-        mlTable.setEntityName(table.getName());
-        mlTable.setIsSystem(false);
-        mlTable.setJavaClass(null);
-        mlTable.setHasHistory(false);
-        mlTable.setDescription(getDescription(table));
-        mlTable.setParent(null);
-        mlTable.setIsAbstract(false);
-        mlTable.setIsCacheable(false);
-        mlTable.setTitleFormat("");
-        mlTable.setHandlerClassName(null);
-        mlTable.setReplicationHandlerClassName(null);
+        MlClass mlClass = new MlClass();
+        mlClass.setTableName(table.getName());
+        mlClass.setEntityName(table.getName());
+        mlClass.setIsSystem(false);
+        mlClass.setJavaClass(null);
+        mlClass.setHasHistory(false);
+        mlClass.setDescription(getDescription(table));
+        mlClass.setParent(null);
+        mlClass.setIsAbstract(false);
+        mlClass.setIsCacheable(false);
+        mlClass.setTitleFormat("");
+        mlClass.setHandlerClassName(null);
+        mlClass.setReplicationHandlerClassName(null);
 
         for (Column column: table.getColumns()){
-            mlTable.getColumns().add(columnConvertor.toMetadata(column));
+            mlClass.getColumns().add(columnConvertor.toMetadata(column));
         }
 
-        return mlTable;
+        return mlClass;
     }
 
     @Override

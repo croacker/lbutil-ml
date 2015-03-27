@@ -32,15 +32,15 @@ public class MetadataLiquibaseService {
     root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd");
     document.appendChild(root);
 
-    for (MlClass mlTable : mlDatabase.getTables()) {
-      Long tableId = idForTable(mlDatabase, mlTable);
+    for (MlClass mlClass : mlDatabase.getTables()) {
+      Long tableId = idForTable(mlDatabase, mlClass);
       Element changeSet = document.createElement("changeSet");
       changeSet.setAttribute("id", "ts_" + String.valueOf(new Date().getTime()) + String.valueOf(tableId)); //todo: generate
       changeSet.setAttribute("author", "somebadu"); //todo: generate
 
-      changeSet.appendChild(createInsertClass(document, mlTable, tableId));
+      changeSet.appendChild(createInsertClass(document, mlClass, tableId));
 
-      for (MlAttr mlAttr : mlTable.getColumns()) {
+      for (MlAttr mlAttr : mlClass.getColumns()) {
         changeSet.appendChild(createInsertAttr(document, mlAttr, tableId));
       }
       root.appendChild(changeSet);
@@ -49,10 +49,10 @@ public class MetadataLiquibaseService {
     return document;
   }
 
-  private Long idForTable(MlDatabase mlDatabase, MlClass mlTable) {
-    Long id = mlTable.getId();
+  private Long idForTable(MlDatabase mlDatabase, MlClass mlClass) {
+    Long id = mlClass.getId();
     if (id == null) {
-      id = Long.valueOf(mlDatabase.getTables().indexOf(mlTable));
+      id = Long.valueOf(mlDatabase.getTables().indexOf(mlClass));
     }
     return id;
   }
@@ -61,10 +61,10 @@ public class MetadataLiquibaseService {
    * Создать элемент добавления записи в таблицу классов
    *
    * @param document
-   * @param mlTable
+   * @param mlClass
    * @return
    */
-  private Element createInsertClass(Document document, MlClass mlTable, Long tableId) {
+  private Element createInsertClass(Document document, MlClass mlClass, Long tableId) {
     Element insertClass = document.createElement("insert");
     insertClass.setAttribute("tableName", "MlClass");
 
@@ -75,42 +75,42 @@ public class MetadataLiquibaseService {
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "tableName");
-    columnData.setAttribute("value", mlTable.getTableName());
+    columnData.setAttribute("value", mlClass.getTableName());
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "entityName");
-    columnData.setAttribute("value", mlTable.getEntityName());
+    columnData.setAttribute("value", mlClass.getEntityName());
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "isSystem");
-    columnData.setAttribute("value", String.valueOf(mlTable.getIsSystem()));
+    columnData.setAttribute("value", String.valueOf(mlClass.getIsSystem()));
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "hasHistory");
-    columnData.setAttribute("value", String.valueOf(mlTable.getHasHistory()));
+    columnData.setAttribute("value", String.valueOf(mlClass.getHasHistory()));
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "isAbstract");
-    columnData.setAttribute("value", String.valueOf(mlTable.getIsAbstract()));
+    columnData.setAttribute("value", String.valueOf(mlClass.getIsAbstract()));
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "isCacheable");
-    columnData.setAttribute("value", String.valueOf(mlTable.getIsCacheable()));
+    columnData.setAttribute("value", String.valueOf(mlClass.getIsCacheable()));
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "description");
-    columnData.setAttribute("value", mlTable.getDescription());
+    columnData.setAttribute("value", mlClass.getDescription());
     insertClass.appendChild(columnData);
 
     columnData = document.createElement("column");
     columnData.setAttribute("name", "description");
-    columnData.setAttribute("value", mlTable.getDescription());
+    columnData.setAttribute("value", mlClass.getDescription());
     insertClass.appendChild(columnData);
 
     return insertClass;

@@ -62,7 +62,8 @@ public class MlAttr extends MlUnit {
   private String replicationType;
   @Getter @Setter
   private String guid;
-  @Getter @Setter
+  @Getter
+  @Setter
   private Date lastChange;
   @Getter @Setter
   private String defaultValue;

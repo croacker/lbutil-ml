@@ -7,6 +7,7 @@ import ru.croacker.lbutil.database.metadata.MlUnit;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * Универсальный конвертор для набора данных
@@ -15,17 +16,12 @@ import java.sql.SQLException;
 @Slf4j
 public class CommonResultSetConvertor extends ResultSetConvertor{
 
-    private static final class DataType{
-        public static final String CHAR = "char";
-        public static final String BIGINT = "bigint";
-        public static final String BOOLEAN = "boolean";
-    }
-
-    public MlUnit toMetadata(ResultSet resultSet, MlUnit unit) {
+    public <T extends MlUnit> T toMetadata(ResultSet resultSet, Class<T> clazz) {
+        T unit = T.newInstance(clazz);
         try {
-            for(int i = 0; i < resultSet.getMetaData().getColumnCount(); i++){
+            for(int i = 1; i < resultSet.getMetaData().getColumnCount() + 1; i++){
                 String columnName = resultSet.getMetaData().getColumnName(i);
-                Object columnValue = resultSet.getMetaData().getColumnTypeName(i);
+                Object columnValue = getColumnValue(resultSet, i);
                 unit.getColumnValues().put(columnName, columnValue);
             }
         } catch (SQLException e) {
@@ -39,14 +35,16 @@ public class CommonResultSetConvertor extends ResultSetConvertor{
     }
 
     private Object getColumnValue(ResultSet resultSet, int i) throws SQLException {
-        String type = resultSet.getMetaData().getColumnTypeName(i);
+        int type = resultSet.getMetaData().getColumnType(i);
         switch (type){
-            case DataType.CHAR:
+            case Types.CHAR: case Types.VARCHAR:
                 return getString(resultSet, resultSet.getMetaData().getColumnName(i));
-            case DataType.BIGINT:
+            case Types.BIGINT:
                 return getLong(resultSet, resultSet.getMetaData().getColumnName(i));
-            case DataType.BOOLEAN:
+            case Types.BOOLEAN: case Types.BIT:
                 return getBoolean(resultSet, resultSet.getMetaData().getColumnName(i));
+            case Types.TIMESTAMP:
+                return getDate(resultSet, resultSet.getMetaData().getColumnName(i));
             default:
                 return getString(resultSet, resultSet.getMetaData().getColumnName(i));
         }

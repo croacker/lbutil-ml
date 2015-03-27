@@ -23,8 +23,8 @@ public class MlDatabase {
         this.isOriginal = isOriginal;
     }
 
-    public void addTable(MlClass mlTable) {
-        getTables().add(mlTable);
+    public void addTable(MlClass mlClass) {
+        getTables().add(mlClass);
     }
 
 }

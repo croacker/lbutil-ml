@@ -22,17 +22,17 @@ public class JavaClassService {
 
   public List<JavaClassModel> formClasses(MlDatabase mlDatabase){
     List<JavaClassModel> classes = Lists.newArrayList();
-    for (MlClass mlTable:mlDatabase.getTables()){
+    for (MlClass mlClass :mlDatabase.getTables()){
       String fullClassName;
       if(mlDatabase.isOriginal()){
-        fullClassName = mlTable.getJavaClass();
+        fullClassName = mlClass.getJavaClass();
       }else {
-        fullClassName = DEFAULT_PACKAGE_NAME + "." + mlTable.getEntityName();
+        fullClassName = DEFAULT_PACKAGE_NAME + "." + mlClass.getEntityName();
       }
 
       if(!StringUtils.isEmpty(fullClassName)) {
         JavaClassModel javaClassModel = new JavaClassModel(fullClassName);
-        for (MlAttr mlAttr : mlTable.getColumns()) {
+        for (MlAttr mlAttr : mlClass.getColumns()) {
           javaClassModel.addField(mlAttr.getEntityFieldName(), mlAttr.getFieldTypeName());
         }
         classes.add(javaClassModel);

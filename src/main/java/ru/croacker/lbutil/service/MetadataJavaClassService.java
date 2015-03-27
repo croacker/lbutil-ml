@@ -9,7 +9,7 @@ import ru.croacker.lbutil.database.metadata.MlClass;
 public class MetadataJavaClassService {
 
   public void formClasses(MlDatabase mlDatabase){
-    for (MlClass mlTable : mlDatabase.getTables()) {
+    for (MlClass mlClass : mlDatabase.getTables()) {
 
     }
   }
