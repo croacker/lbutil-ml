@@ -1,37 +1,32 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  * TODO заполнение
  */
 public class MlAttrGroup extends MlUnit {
 
-    @Getter
-    @Setter
-    private String title;
+  public String getTitle(){
+    return (String) get("title");
+  }
 
-    @Getter
-    @Setter
-    private Long linkedClass;
+  public Long getLinkedClass(){
+    return (Long) get("linkedClass");
+  }
 
-    @Getter
-    @Setter
-    private Long parent;
+  public Long getParent(){
+    return (Long) get("parent");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private Long linkedClass_order;
+  public String getLinkedClass_order(){
+    return (String) get("linkedClass_order");
+  }
 
 }

@@ -1,57 +1,52 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlSecuritySettings extends MlUnit {
 
-    @Getter
-    @Setter
-    private String authType;
+  public String getAuthType(){
+    return (String) get("authType");
+  }
 
-    @Getter
-    @Setter
-    private Long passwordStrengthLength;
+  public Long getPasswordStrengthLength(){
+    return (Long) get("passwordStrengthLength");
+  }
 
-    @Getter
-    @Setter
-    private String passwordStrengthAlphabet;
+  public String getPasswordStrengthAlphabet(){
+    return (String) get("passwordStrengthAlphabet");
+  }
 
-    @Getter
-    @Setter
-    private Long failAuthCount;
+  public Long getFailAuthCount(){
+    return (Long) get("failAuthCount");
+  }
 
-    @Getter
-    @Setter
-    private Long blockTimeAfterFailAuth;
+  public Long getBlockTimeAfterFailAuth(){
+    return (Long) get("blockTimeAfterFailAuth");
+  }
 
-    @Getter
-    @Setter
-    private Long blockAfterNotUse;
+  public Long getBlockAfterNotUse(){
+    return (Long) get("blockAfterNotUse");
+  }
 
-    @Getter
-    @Setter
-    private Long sessionLifeTime;
+  public Long getSessionLifeTime(){
+    return (Long) get("sessionLifeTime");
+  }
 
-    @Getter
-    @Setter
-    private Long passwordLifeTime;
+  public Long getPasswordLifeTime(){
+    return (Long) get("passwordLifeTime");
+  }
 
-    @Getter
-    @Setter
-    private Boolean forAdmin;
+  public Long getForAdmin(){
+    return (Long) get("forAdmin");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
 }

@@ -1,55 +1,47 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.xml.crypto.Data;
-import java.util.Date;
-
 /**
  *
  */
 public class MlPageBlockBase extends MlUnit {
 
-    @Getter
-    @Setter
-    private String description;
+  public String getDescription() {
+    return String.valueOf(get("description"));
+  }
 
-    @Getter
-    @Setter
-    private Long orderNum;
+  public Long getOrderNum() {
+    return (Long) get("orderNum");
+  }
 
-    @Getter
-    @Setter
-    private String zone;
+  public String getZone() {
+    return (String) get("zone");
+  }
 
-    @Getter
-    @Setter
-    private String realDynamicEntity;
+  public String getRealDynamicEntity() {
+    return (String) get("realDynamicEntity");
+  }
 
-    @Getter
-    @Setter
-    private String controllerJavaClass;
+  public String getControllerJavaClass() {
+    return (String) get("controllerJavaClass");
+  }
 
-    @Getter
-    @Setter
-    private String bootJs;
+  public String getBootJs() {
+    return (String) get("bootJs");
+  }
 
-    @Getter
-    @Setter
-    private Long page;
+  public Long getPage() {
+    return (Long) get("page");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid() {
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange() {
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private String template;
-
-
+  public String getTemplate() {
+    return (String) get("template");
+  }
 }

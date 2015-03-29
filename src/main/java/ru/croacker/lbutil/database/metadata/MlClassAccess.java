@@ -1,41 +1,36 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlClassAccess extends MlUnit {
 
-    @Getter
-    @Setter
-    private Long mlClass;
+  public Long getMlClass(){
+    return (Long) get("mlClass");
+  }
 
-    @Getter
-    @Setter
-    private Boolean create;
+  public Boolean getCreate(){
+    return (Boolean) get("create");
+  }
 
-    @Getter
-    @Setter
-    private Boolean read;
+  public Boolean getRead(){
+    return (Boolean) get("read");
+  }
 
-    @Getter
-    @Setter
-    private Boolean update;
+  public Boolean getUpdate(){
+    return (Boolean) get("update");
+  }
 
-    @Getter
-    @Setter
-    private Boolean delete;
+  public Boolean getDelete(){
+    return (Boolean) get("delete");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
 }

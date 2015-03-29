@@ -1,29 +1,24 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlRole extends MlUnit {
 
-    @Getter
-    @Setter
-    private String name;
+  public String getName(){
+    return (String) get("name");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private String roleType;
+  public String getRoleType(){
+    return (String) get("roleType");
+  }
 
 }

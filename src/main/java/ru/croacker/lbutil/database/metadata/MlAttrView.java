@@ -1,37 +1,32 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlAttrView extends MlUnit {
 
-    @Getter
-    @Setter
-    private String title;
+  public String getTitle(){
+    return (String) get("title");
+  }
 
-    @Getter
-    @Setter
-    private String code;
+  public String getCode(){
+    return (String) get("code");
+  }
 
-    @Getter
-    @Setter
-    private String templateName;
+  public String getTemplateName(){
+    return (String) get("templateName");
+  }
 
-    @Getter
-    @Setter
-    private String attrType;
+  public String getAttrType(){
+    return (String) get("attrType");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
 }

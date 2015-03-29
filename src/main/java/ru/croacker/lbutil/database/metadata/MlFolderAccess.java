@@ -1,25 +1,20 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlFolderAccess extends MlUnit {
 
-    @Getter
-    @Setter
-    private String name;
+  public String getName(){
+    return (String) get("name");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
 }

@@ -1,27 +1,24 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  *
  */
 public class MlSqlToCsvUtil extends MlUnit {
 
-    @Getter
-    @Setter
-    private String sql;
+  public String getSql(){
+    return (String) get("sql");
+  }
 
-    @Getter
-    @Setter
-    private String fileEncoding;
+  public String getFileEncoding(){
+    return (String) get("fileEncoding");
+  }
 
-    @Getter
-    @Setter
-    private String columnSeparator;
+  public String getColumnSeparator(){
+    return (String) get("columnSeparator");
+  }
 
-    @Getter
-    @Setter
-    private String fileName;
+  public String getFileName(){
+    return (String) get("fileName");
+  }
 
 }

@@ -1,41 +1,36 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlPage extends MlUnit  {
 
-    @Getter
-    @Setter
-    private String url;
+  public String getUrl(){
+    return (String) get("url");
+  }
 
-    @Getter
-    @Setter
-    private String description;
+  public String getDescription(){
+    return String.valueOf(get("description"));
+  }
 
-    @Getter
-    @Setter
-    private String title;
+  public String getTitle(){
+    return (String) get("title");
+  }
 
-    @Getter
-    @Setter
-    private String template;
+  public String getTemplate(){
+    return (String) get("template");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private String projectTemplate;
+  public String getProjectTemplate(){
+    return (String) get("projectTemplate");
+  }
 
 }

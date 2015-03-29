@@ -1,8 +1,5 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -10,40 +7,40 @@ import java.util.Date;
  */
 public class MlScheduled extends MlUnit {
 
-    @Getter
-    @Setter
-    private String name;
+  public String getName(){
+    return (String) get("name");
+  }
 
-    @Getter
-    @Setter
-    private String cron;
+  public String getCron(){
+    return (String) get("cron");
+  }
 
-    @Getter
-    @Setter
-    private String jobClass;
+  public String getJobClass(){
+    return (String) get("jobClass");
+  }
 
-    @Getter
-    @Setter
-    private String lastResult;
+  public String getLastResult(){
+    return (String) get("lastResult");
+  }
 
-    @Getter
-    @Setter
-    private Date lastStart;
+  public Date getLastStart(){
+    return (Date) get("lastStart");
+  }
 
-    @Getter
-    @Setter
-    private Boolean isActive;
+  public Boolean getIsActive(){
+    return (Boolean) get("isActive");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private String realDynamicEntity;
+  public Boolean getRealDynamicEntity(){
+    return (Boolean) get("realDynamicEntity");
+  }
 
 }

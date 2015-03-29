@@ -1,53 +1,48 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlFolder extends MlUnit {
 
-    @Getter
-    @Setter
-    private String title;
+  public String getTitle(){
+    return (String) get("title");
+  }
 
-    @Getter
-    @Setter
-    private Long childClass;
+  public Long getChildClass(){
+    return (Long) get("childClass");
+  }
 
-    @Getter
-    @Setter
-    private Long parent;
+  public Long getParent(){
+    return (Long) get("parent");
+  }
 
-    @Getter
-    @Setter
-    private String childClassCondition;
+  public String getChildClassCondition(){
+    return (String) get("childClassCondition");
+  }
 
-    @Getter
-    @Setter
-    private String icon;
+  public String getIconn(){
+    return (String) get("icon");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private Long order;
+  public Long getOrder(){
+    return (Long) get("order");
+  }
 
-    @Getter
-    @Setter
-    private String url;
+  public String getUrl(){
+    return (String) get("url");
+  }
 
-    @Getter
-    @Setter
-    private String iconURL;
+  public String getIconURL(){
+    return (String) get("iconURL");
+  }
 
 }

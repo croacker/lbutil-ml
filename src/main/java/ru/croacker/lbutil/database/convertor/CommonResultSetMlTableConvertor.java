@@ -13,20 +13,21 @@ public class CommonResultSetMlTableConvertor extends ResultSetConvertor implemen
 
   @Override
   public MlClass toMetadata(ResultSet resultSet) {
-    MlClass mlClass = new MlClass();
-    mlClass.setId(getLong(resultSet, "id"));
-    mlClass.setTableName(getString(resultSet, "tableName"));
-    mlClass.setEntityName(getString(resultSet, "entityName"));
-    mlClass.setIsSystem(getBoolean(resultSet, "isSystem"));
-    mlClass.setJavaClass(getString(resultSet, "javaClass"));
-    mlClass.setHasHistory(getBoolean(resultSet, "hasHistory"));
-    mlClass.setDescription(getString(resultSet, "description"));
-    mlClass.setParent(getLong(resultSet, "parent"));
-    mlClass.setIsCacheable(getBoolean(resultSet, "isCacheable"));
-    mlClass.setTitleFormat(getString(resultSet, "titleFormat"));
-    mlClass.setHandlerClassName(getString(resultSet, "handlerClassName"));
-    mlClass.setReplicationHandlerClassName(getString(resultSet, "replicationHandlerClassName"));
-    return mlClass;
+//    MlClass mlClass = new MlClass();
+//    mlClass.setId(getLong(resultSet, "id"));
+//    mlClass.setTableName(getString(resultSet, "tableName"));
+//    mlClass.setEntityName(getString(resultSet, "entityName"));
+//    mlClass.setIsSystem(getBoolean(resultSet, "isSystem"));
+//    mlClass.setJavaClass(getString(resultSet, "javaClass"));
+//    mlClass.setHasHistory(getBoolean(resultSet, "hasHistory"));
+//    mlClass.setDescription(getString(resultSet, "description"));
+//    mlClass.setParent(getLong(resultSet, "parent"));
+//    mlClass.setIsCacheable(getBoolean(resultSet, "isCacheable"));
+//    mlClass.setTitleFormat(getString(resultSet, "titleFormat"));
+//    mlClass.setHandlerClassName(getString(resultSet, "handlerClassName"));
+//    mlClass.setReplicationHandlerClassName(getString(resultSet, "replicationHandlerClassName"));
+//    return mlClass;
+    return null;
   }
 
   @Override

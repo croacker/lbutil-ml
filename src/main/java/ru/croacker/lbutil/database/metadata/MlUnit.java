@@ -2,7 +2,6 @@ package ru.croacker.lbutil.database.metadata;
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public abstract class MlUnit {
     }
 
     public void setId(Long value){
-        getColumnValues().put("id", value);
+        set("id", value);
     }
 
     public Object get(String key){

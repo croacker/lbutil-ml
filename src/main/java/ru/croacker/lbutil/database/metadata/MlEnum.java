@@ -1,47 +1,40 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
-
 /**
  *
  */
 public class MlEnum extends MlUnit {
 
-    @Getter
-    @Setter
-    private String code;
+  public String getCode(){
+    return (String) get("code");
+  }
 
-    @Getter
-    @Setter
-    private String title;
+  public String getTitle(){
+    return (String) get("title");
+  }
 
-    @Getter
-    @Setter
-    private String description;
+  public String getDescription(){
+    return (String) get("description");
+  }
 
-    @Getter
-    @Setter
-    private Long mlAttr;
+  public Long getMlAttr(){
+    return (Long) get("mlAttr");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private Long order;
+  public Long getOrder(){
+    return (Long) get("order");
+  }
 
-    @Getter
-    @Setter
-    private Long mlAttr_order;
-
-
+  public Long getMlAttr_order(){
+    return (Long) get("mlAttr_order");
+  }
 
 }

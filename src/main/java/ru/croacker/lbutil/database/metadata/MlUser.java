@@ -1,8 +1,5 @@
 package ru.croacker.lbutil.database.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -10,64 +7,64 @@ import java.util.Date;
  */
 public class MlUser extends MlUnit {
 
-    @Getter
-    @Setter
-    private String login;
+  public String getLogin(){
+    return (String) get("login");
+  }
 
-    @Getter
-    @Setter
-    private String password;
+  public String getPassword(){
+    return (String) get("password");
+  }
 
-    @Getter
-    @Setter
-    private String first_name;
+  public String getFirst_name(){
+    return (String) get("first_name");
+  }
 
-    @Getter
-    @Setter
-    private String last_name;
+  public String getLast_name(){
+    return (String) get("last_name");
+  }
 
-    @Getter
-    @Setter
-    private String guid;
+  public String getGuid(){
+    return (String) get("guid");
+  }
 
-    @Getter
-    @Setter
-    private Date lastChange;
+  public String getLastChange(){
+    return (String) get("lastChange");
+  }
 
-    @Getter
-    @Setter
-    private Long failAuthCount;
+  public String getFailAuthCount(){
+    return (String) get("failAuthCount");
+  }
 
-    @Getter
-    @Setter
-    private Date lastLogin;
+  public Date getLastLogin(){
+    return (Date) get("lastLogin");
+  }
 
-    @Getter
-    @Setter
-    private Date lastPasswordChange;
+  public Date getLastPasswordChange(){
+    return (Date) get("lastPasswordChange");
+  }
 
-    @Getter
-    @Setter
-    private Boolean isBlocked;
+  public Boolean getIsBlocked(){
+    return (Boolean) get("isBlocked");
+  }
 
-    @Getter
-    @Setter
-    private Boolean isTemporalBlocked;
+  public Boolean getIsTemporalBlocked(){
+    return (Boolean) get("isTemporalBlocked");
+  }
 
-    @Getter
-    @Setter
-    private Date temporalBlockedBefore;
+  public Date getTemporalBlockedBefore(){
+    return (Date) get("temporalBlockedBefore");
+  }
 
-    @Getter
-    @Setter
-    private Boolean needChangePassword;
+  public Boolean getNeedChangePassword(){
+    return (Boolean) get("needChangePassword");
+  }
 
-    @Getter
-    @Setter
-    private String homePage;
+  public Boolean getHomePage(){
+    return (Boolean) get("homePage");
+  }
 
-    @Getter
-    @Setter
-    private String holder;
+  public Boolean getHolder(){
+    return (Boolean) get("holder");
+  }
 
 }
