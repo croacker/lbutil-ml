@@ -29,12 +29,12 @@ public class ExportMlMetadataLiquibasePanel extends JPanel {
     setBorder(javax.swing.BorderFactory.createEtchedBorder());
     setToolTipText("Экспорт Ml классов");
 
-    jlExportFile = new JLabel("Файл Ml классов:");
+    jlExportFile = new JLabel("Каталог Ml-классов:");
     jtfExportFile = new JTextField();
     jbSelectExportFile = getSelectFolderButton(jtfExportFile);
-    jbSelectExportFile.setToolTipText("Выбор файла для экспорта наборов изменений ML классов");
+    jbSelectExportFile.setToolTipText("Выбор каталога для экспорта файлов наборов изменений ML классов");
     jbExport = new JButton("Экспорт");
-    jbExport.setToolTipText("Экспорт ML классов в файл наборов изменений");
+    jbExport.setToolTipText("Экспорт ML классов в файлы наборов изменений");
 
     jpExportLayout = new javax.swing.GroupLayout(this);
     setLayout(jpExportLayout);

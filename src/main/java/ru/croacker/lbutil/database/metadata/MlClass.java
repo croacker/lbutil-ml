@@ -24,12 +24,12 @@ public class MlClass extends MlUnit {
     getColumns().addAll(mlAttrs);
   }
 
+    public String getTableName(){
+        return String.valueOf(get("tableName"));
+    }
+
   public String getEntityName(){
     return String.valueOf(get("entityName"));
-  }
-
-  public String getTableName(){
-    return String.valueOf(get("tableName"));
   }
 
   public Boolean getIsSystem(){

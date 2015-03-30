@@ -164,8 +164,23 @@ public class MetadataLiquibaseService {
         insertClass.appendChild(columnData);
 
         columnData = document.createElement("column");
+        columnData.setAttribute("name", "javaClass");
+        columnData.setAttribute("value", String.valueOf(mlClass.getJavaClass()));
+        insertClass.appendChild(columnData);
+
+        columnData = document.createElement("column");
         columnData.setAttribute("name", "hasHistory");
         columnData.setAttribute("value", String.valueOf(mlClass.getHasHistory()));
+        insertClass.appendChild(columnData);
+
+        columnData = document.createElement("column");
+        columnData.setAttribute("name", "description");
+        columnData.setAttribute("value", mlClass.getDescription());
+        insertClass.appendChild(columnData);
+
+        columnData = document.createElement("column");
+        columnData.setAttribute("name", "parent");
+        columnData.setAttribute("value", String.valueOf(mlClass.getParent()));
         insertClass.appendChild(columnData);
 
         columnData = document.createElement("column");
@@ -179,13 +194,23 @@ public class MetadataLiquibaseService {
         insertClass.appendChild(columnData);
 
         columnData = document.createElement("column");
-        columnData.setAttribute("name", "description");
-        columnData.setAttribute("value", mlClass.getDescription());
+        columnData.setAttribute("name", "titleFormat");
+        columnData.setAttribute("value", mlClass.getTitleFormat());
         insertClass.appendChild(columnData);
 
         columnData = document.createElement("column");
-        columnData.setAttribute("name", "description");
-        columnData.setAttribute("value", mlClass.getDescription());
+        columnData.setAttribute("name", "handlerClassName");
+        columnData.setAttribute("value", String.valueOf(mlClass.getHandlerClassName()));
+        insertClass.appendChild(columnData);
+
+        columnData = document.createElement("column");
+        columnData.setAttribute("name", "replicationHandlerClassName");
+        columnData.setAttribute("value", String.valueOf(mlClass.getReplicationHandlerClassName()));
+        insertClass.appendChild(columnData);
+
+        columnData = document.createElement("column");
+        columnData.setAttribute("name", "replicationHandlerClassName");
+        columnData.setAttribute("value", String.valueOf(mlClass.getReplicationHandlerClassName()));
         insertClass.appendChild(columnData);
 
         return insertClass;
@@ -339,7 +364,7 @@ public class MetadataLiquibaseService {
         insertAttr.appendChild(columnData);
 
         columnData = document.createElement("column");
-        columnData.setAttribute("name", "lazy");
+        columnData.setAttribute("name", "view");
         columnData.setAttribute("value", String.valueOf(mlAttr.getView()));
         insertAttr.appendChild(columnData);
 

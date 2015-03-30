@@ -14,7 +14,7 @@ public class DbConnectionDto {
     private String name;
     @Getter
     private String jdbcDriver;
-
+    @Getter
     private String url;
     @Getter
     private String user;
@@ -30,16 +30,6 @@ public class DbConnectionDto {
     public DbConnectionDto setJdbcDriver(String jdbcDriver) {
         this.jdbcDriver = jdbcDriver;
         return this;
-    }
-
-    public String getUrl(){
-        String result = url;
-        if(JdbcDriver.POSTGRESQL.getDriverName().equals(getJdbcDriver())){
-            if(!result.contains("unknownLength")) {
-                result = result + "?unknownLength=10485760";
-            }
-        }
-        return result;
     }
 
     public DbConnectionDto setUrl(String url) {
