@@ -37,6 +37,10 @@ public abstract class MlUnit {
         return getColumnValues().get(key);
     }
 
+    public String getString(String key){
+        return String.valueOf(getColumnValues().get(key));
+    }
+
     public void set(String key, Object value){
         getColumnValues().put(key, value);
     }
