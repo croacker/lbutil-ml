@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlPageBlockBase extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlPageBlockBase.class.getSimpleName() + "\"";
+
   public String getDescription() {
     return String.valueOf(get("description"));
   }

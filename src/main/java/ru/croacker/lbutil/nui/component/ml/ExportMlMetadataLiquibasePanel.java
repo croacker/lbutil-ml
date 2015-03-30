@@ -1,7 +1,7 @@
 package ru.croacker.lbutil.nui.component.ml;
 
 import org.springframework.stereotype.Component;
-import ru.croacker.lbutil.nui.component.SelectFileButton;
+import ru.croacker.lbutil.nui.component.SelectFolderButton;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class ExportMlMetadataLiquibasePanel extends JPanel {
 
     jlExportFile = new JLabel("Файл Ml классов:");
     jtfExportFile = new JTextField();
-    jbSelectExportFile = getSelectFileButton(jtfExportFile);
+    jbSelectExportFile = getSelectFolderButton(jtfExportFile);
     jbSelectExportFile.setToolTipText("Выбор файла для экспорта наборов изменений ML классов");
     jbExport = new JButton("Экспорт");
     jbExport.setToolTipText("Экспорт ML классов в файл наборов изменений");
@@ -74,8 +74,8 @@ public class ExportMlMetadataLiquibasePanel extends JPanel {
     jbExport.addActionListener(actionListener);
   }
 
-  private JButton getSelectFileButton(JTextComponent filenameVisualizer){
-    return new SelectFileButton(filenameVisualizer, JFileChooser.SAVE_DIALOG);
+  private JButton getSelectFolderButton(JTextComponent filenameVisualizer){
+    return new SelectFolderButton(filenameVisualizer);
   }
 
 }

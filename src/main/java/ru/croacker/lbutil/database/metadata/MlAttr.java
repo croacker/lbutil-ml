@@ -10,6 +10,8 @@ import java.util.Date;
  */
 public class MlAttr extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlAttr.class.getSimpleName() + "\"";
+
   public String getEntityFieldName(){
     return String.valueOf(get("entityFieldName"));
   }

@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlClassAccess extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlClassAccess.class.getSimpleName() + "\"";
+
   public Long getMlClass(){
     return (Long) get("mlClass");
   }

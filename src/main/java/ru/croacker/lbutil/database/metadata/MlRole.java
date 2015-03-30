@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlRole extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlRole.class.getSimpleName() + "\"";
+
   public String getName(){
     return (String) get("name");
   }

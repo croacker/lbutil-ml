@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class MlClass extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlClass.class.getSimpleName() + "\"";
+
   private List<MlAttr> columns = new ArrayList<>();
 
   public List<MlAttr> getColumns() {

@@ -5,28 +5,30 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlAttrGroup extends MlUnit {
 
-  public String getTitle(){
-    return (String) get("title");
-  }
+    public static final String QUE = "select * from \"" + MlAttrGroup.class.getSimpleName() + "\"";
 
-  public Long getLinkedClass(){
-    return (Long) get("linkedClass");
-  }
+    public String getTitle() {
+        return (String) get("title");
+    }
 
-  public Long getParent(){
-    return (Long) get("parent");
-  }
+    public Long getLinkedClass() {
+        return (Long) get("linkedClass");
+    }
 
-  public String getGuid(){
-    return (String) get("guid");
-  }
+    public Long getParent() {
+        return (Long) get("parent");
+    }
 
-  public String getLastChange(){
-    return (String) get("lastChange");
-  }
+    public String getGuid() {
+        return (String) get("guid");
+    }
 
-  public String getLinkedClass_order(){
-    return (String) get("linkedClass_order");
-  }
+    public String getLastChange() {
+        return (String) get("lastChange");
+    }
+
+    public String getLinkedClass_order() {
+        return (String) get("linkedClass_order");
+    }
 
 }

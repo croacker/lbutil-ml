@@ -7,6 +7,8 @@ import java.util.Date;
  */
 public class MlUser extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlUser.class.getSimpleName() + "\"";
+
   public String getLogin(){
     return (String) get("login");
   }

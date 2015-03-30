@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlSqlToCsvUtil extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlSqlToCsvUtil.class.getSimpleName() + "\"";
+
   public String getSql(){
     return (String) get("sql");
   }

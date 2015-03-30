@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlPage extends MlUnit  {
 
+    public static final String QUE = "select * from \"" + MlPage.class.getSimpleName() + "\"";
+
   public String getUrl(){
     return (String) get("url");
   }

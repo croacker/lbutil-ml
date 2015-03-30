@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlSecuritySettings extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlSecuritySettings.class.getSimpleName() + "\"";
+
   public String getAuthType(){
     return (String) get("authType");
   }

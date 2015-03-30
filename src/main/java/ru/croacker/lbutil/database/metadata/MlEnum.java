@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlEnum extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlEnum.class.getSimpleName() + "\"";
+
   public String getCode(){
     return (String) get("code");
   }

@@ -5,6 +5,8 @@ package ru.croacker.lbutil.database.metadata;
  */
 public class MlAttrView extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlAttrView.class.getSimpleName() + "\"";
+
   public String getTitle(){
     return (String) get("title");
   }

@@ -7,6 +7,8 @@ import java.util.Date;
  */
 public class MlScheduled extends MlUnit {
 
+    public static final String QUE = "select * from \"" + MlScheduled.class.getSimpleName() + "\"";
+
   public String getName(){
     return (String) get("name");
   }

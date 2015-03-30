@@ -1,7 +1,7 @@
 package ru.croacker.lbutil.nui.component.ml;
 
 import org.springframework.stereotype.Component;
-import ru.croacker.lbutil.nui.component.SelectFileButton;
+import ru.croacker.lbutil.nui.component.SelectFolderButton;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class ExportJavaClassesPanel  extends JPanel {
 
     jlExportFolder = new JLabel("Каталог Java-классов:");
     jtfExportFolder = new JTextField();
-    jbSelectExportFolder = getSelectFileButton(jtfExportFolder);
+    jbSelectExportFolder = getSelectFolderButton(jtfExportFolder);
     jbSelectExportFolder.setToolTipText("Выбор каталога для экспорта Java-классов");
     jbExport = new JButton("Экспорт");
     jbExport.setToolTipText("Экспорт Java-классов");
@@ -74,8 +74,8 @@ public class ExportJavaClassesPanel  extends JPanel {
     jbExport.addActionListener(actionListener);
   }
 
-  private JButton getSelectFileButton(JTextComponent filenameVisualizer){
-    return new SelectFileButton(filenameVisualizer, JFileChooser.SAVE_DIALOG, true);
+  private JButton getSelectFolderButton(JTextComponent filenameControl){
+    return new SelectFolderButton(filenameControl);
   }
 
 }

@@ -19,13 +19,13 @@ public class TestDdlUtil {
     loadContext();
 
     DdlService ddlService = ContextLoader.getInstance().getContext().getBean(DdlService.class);
-    MlDatabase mlDatabase = ddlService.getMlDatabaseModelFromMlClass(getDS());
+    MlDatabase mlDatabase = ddlService.getMlDatabaseModelFromMlTables(getDS());
 
     MetadataLiquibaseService metadataLiquibaseService = ContextLoader.getInstance().getContext().getBean(MetadataLiquibaseService.class);
-    Document document = metadataLiquibaseService.formDocument(mlDatabase);
+//    Document document = metadataLiquibaseService.formDocument(mlDatabase);
 
     FileWriteService fileWriteService = ContextLoader.getInstance().getContext().getBean(FileWriteService.class);
-    fileWriteService.writeXml(document, "c:/tmp/ml-metadata-file.xml");
+//    fileWriteService.writeXml(document, "c:/tmp/ml-metadata-file.xml");
   }
 
   private static DataSource getDS() throws PropertyVetoException, SQLException {
