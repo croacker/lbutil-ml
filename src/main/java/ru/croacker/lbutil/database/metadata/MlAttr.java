@@ -13,11 +13,11 @@ public class MlAttr extends MlUnit {
     public static final String QUE = "select * from \"" + MlAttr.class.getSimpleName() + "\"";
 
     public String getEntityFieldName() {
-        return String.valueOf(get("entityFieldName"));
+        return (String)get("entityFieldName");
     }
 
     public String getTableFieldName() {
-        return String.valueOf(get("tableFieldName"));
+        return (String)get("tableFieldName");
     }
 
     public Boolean getSystemField() {
@@ -37,11 +37,7 @@ public class MlAttr extends MlUnit {
     }
 
     public Long getLinkAttr() {
-        Long linkAttr = (Long) get("linkAttr");
-        if (linkAttr == 0) {
-            linkAttr = null;
-        }
-        return linkAttr;
+       return (Long) get("linkAttr");
     }
 
     public Long getMlClass() {
@@ -49,11 +45,7 @@ public class MlAttr extends MlUnit {
     }
 
     public Long getLinkClass() {
-        Long linkClass = (Long) get("linkClass");
-        if (linkClass == 0) {
-            linkClass = null;
-        }
-        return linkClass;
+      return (Long) get("linkClass");
     }
 
     public String getLinkFilter() {

@@ -27,11 +27,11 @@ public class MlClass extends MlUnit {
   }
 
     public String getTableName(){
-        return String.valueOf(get("tableName"));
+        return (String)get("tableName");
     }
 
   public String getEntityName(){
-    return String.valueOf(get("entityName"));
+    return (String)get("entityName");
   }
 
   public Boolean getIsSystem(){
@@ -39,7 +39,7 @@ public class MlClass extends MlUnit {
   }
 
   public String getJavaClass(){
-    return String.valueOf(get("javaClass"));
+    return (String)get("javaClass");
   }
 
   public Boolean getHasHistory(){
@@ -47,7 +47,7 @@ public class MlClass extends MlUnit {
   }
 
   public String getDescription(){
-    return String.valueOf(get("description"));
+    return (String)get("description");
   }
 
   public Long getParent(){
@@ -63,15 +63,15 @@ public class MlClass extends MlUnit {
   }
 
   public String getTitleFormat(){
-    return String.valueOf(get("titleFormat"));
+    return (String)get("titleFormat");
   }
 
   public String getHandlerClassName(){
-    return String.valueOf(get("handlerClassName"));
+    return (String)get("handlerClassName");
   }
 
   public String getReplicationHandlerClassName(){
-    return String.valueOf(get("replicationHandlerClassName"));
+    return (String)get("replicationHandlerClassName");
   }
 
   public void setTableName(String value) {
