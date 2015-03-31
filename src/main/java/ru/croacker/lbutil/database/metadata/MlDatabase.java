@@ -1,9 +1,14 @@
 package ru.croacker.lbutil.database.metadata;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -11,88 +16,91 @@ import java.util.List;
 public class MlDatabase {
 
     @Getter
-    private List<MlClass> tables = new ArrayList<>();
+    private List<MlClass> tables = Lists.newArrayList();
 
     @Getter
-    private List<MlAttrGroup> attrGroups = new ArrayList<>();
+    private List<MlAttrGroup> attrGroups = Lists.newArrayList();
 
     @Getter
-    private List<MlAttrView> attrViews = new ArrayList<>();
+    private List<MlAttrView> attrViews = Lists.newArrayList();
 
     @Getter
-    private List<MlClassAccess> classAccesses = new ArrayList<>();
+    private List<MlClassAccess> classAccesses = Lists.newArrayList();
 
     @Getter
-    private List<MlContentBlock> contentBlocks = new ArrayList<>();
+    private List<MlContentBlock> contentBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlEnum> enums = new ArrayList<>();
+    private List<MlEnum> enums = Lists.newArrayList();
 
     @Getter
-    private List<MlFolder> folders = new ArrayList<>();
+    private List<MlFolder> folders = Lists.newArrayList();
 
     @Getter
-    private List<MlFolderAccess> folderAccesses = new ArrayList<>();
+    private List<MlFolderAccess> folderAccesses = Lists.newArrayList();
 
     @Getter
-    private List<MlNavigationBlock> navigationBlocks = new ArrayList<>();
+    private List<MlNavigationBlock> navigationBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlObjectCreateBlock> objectCreateBlocks = new ArrayList<>();
+    private List<MlObjectCreateBlock> objectCreateBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlObjectListBlock> objectListBlocks= new ArrayList<>();
+    private List<MlObjectListBlock> objectListBlocks= Lists.newArrayList();
 
     @Getter
-    private List<MlObjectViewBlock> objectViewBlocks = new ArrayList<>();
+    private List<MlObjectViewBlock> objectViewBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlPage> pages = new ArrayList<>();
+    private List<MlPage> pages = Lists.newArrayList();
 
     @Getter
-    private List<MlPageAccess> pageAccesses = new ArrayList<>();
+    private List<MlPageAccess> pageAccesses = Lists.newArrayList();
 
     @Getter
-    private List<MlPageBlockBase> pageBlockBases = new ArrayList<>();
+    private List<MlPageBlockBase> pageBlockBases = Lists.newArrayList();
 
     @Getter
-    private List<MlRole> roles = new ArrayList<>();
+    private List<MlRole> roles = Lists.newArrayList();
 
     @Getter
-    private List<MlScheduled> scheduleds = new ArrayList<>();
+    private List<MlScheduled> scheduleds = Lists.newArrayList();
 
     @Getter
-    private List<MlSearchBlock> searchBlocks = new ArrayList<>();
+    private List<MlSearchBlock> searchBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlSecurityBlock> securityBlocks = new ArrayList<>();
+    private List<MlSecurityBlock> securityBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlSecurityChangePasswordBlock> securityChangePasswordBlocks = new ArrayList<>();
+    private List<MlSecurityChangePasswordBlock> securityChangePasswordBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlSecuritySettings> securitySettingses = new ArrayList<>();
+    private List<MlSecuritySettings> securitySettingses = Lists.newArrayList();
 
     @Getter
-    private List<MlSelectObjectsBlock> selectObjectsBlocks = new ArrayList<>();
+    private List<MlSelectObjectsBlock> selectObjectsBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlSqlToCsvUtil> sqlToCsvUtils = new ArrayList<>();
+    private List<MlSqlToCsvUtil> sqlToCsvUtils = Lists.newArrayList();
 
     @Getter
-    private List<MlStaticPageBlock> staticPageBlocks = new ArrayList<>();
+    private List<MlStaticPageBlock> staticPageBlocks = Lists.newArrayList();
 
     @Getter
-    private List<MlUser> users = new ArrayList<>();
+    private List<MlUser> users = Lists.newArrayList();
 
     @Getter
-    private List<MlUtil> utils = new ArrayList<>();
+    private List<MlUtil> utils = Lists.newArrayList();
 
     @Getter
-    private List<MlUtilAccess> utilAccesses = new ArrayList<>();
+    private List<MlUtilAccess> utilAccesses = Lists.newArrayList();
 
     @Getter
-    private List<MlUtilsBlock> utilsBlocks = new ArrayList<>();
+    private List<MlUtilsBlock> utilsBlocks = Lists.newArrayList();
+
+    @Getter
+    private Multimap<String, CommonMlUnit> mnUnits = ArrayListMultimap.create();
 
     @Getter
     private boolean isOriginal;

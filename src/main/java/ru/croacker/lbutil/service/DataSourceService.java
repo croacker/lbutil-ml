@@ -1,12 +1,14 @@
 package ru.croacker.lbutil.service;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.DataSources;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.DbConnectionDto;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
+import java.sql.SQLException;
 
 /**
  */
@@ -27,5 +29,15 @@ public class DataSourceService implements IConnectionsService {
     }
     return dataSource;
   }
+
+    public void destroyDataSource(DataSource dataSource){
+        try {
+            if(dataSource != null) {
+                DataSources.destroy(dataSource);
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 
 }

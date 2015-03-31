@@ -1,6 +1,7 @@
 package ru.croacker.lbutil.service;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -24,6 +25,8 @@ public class MetadataLiquibaseService {
 
     public Map<String, Document> formDocument(MlDatabase mlDatabase, String folder) {
         Map<String, Document> documents = Maps.newHashMap();
+
+        folder = folder.trim();
 
         documents.put(FilenameUtils.concat(folder, "ml-class.xml"), getMlClassesDocument(mlDatabase));
         documents.put(FilenameUtils.concat(folder, formFileName("AttrGroup")), convertToDocument(mlDatabase.getAttrGroups()));
@@ -53,6 +56,13 @@ public class MetadataLiquibaseService {
         documents.put(FilenameUtils.concat(folder, formFileName("Util")), convertToDocument(mlDatabase.getUtils()));
         documents.put(FilenameUtils.concat(folder, formFileName("UtilAccess")), convertToDocument(mlDatabase.getUtilAccesses()));
         documents.put(FilenameUtils.concat(folder, formFileName("UtilsBlock")), convertToDocument(mlDatabase.getUtilsBlocks()));
+
+        //Связи MN
+        for(String tableName: mlDatabase.getMnUnits().keySet()){
+            String fileName = FilenameUtils.concat(folder, formFileName(tableName));
+            Document document = convertToDocument(Lists.newArrayList(mlDatabase.getMnUnits().get(tableName)));
+            documents.put(fileName, document);
+        }
 
         return documents;
     }
@@ -229,6 +239,11 @@ public class MetadataLiquibaseService {
         insertAttr.setAttribute("tableName", "MlAttr");
 
         Element columnData = document.createElement("column");
+        columnData.setAttribute("name", "id");
+        columnData.setAttribute("value", String.valueOf(mlAttr.getId()));
+        insertAttr.appendChild(columnData);
+
+        columnData = document.createElement("column");
         columnData.setAttribute("name", "mlClass");
         columnData.setAttribute("value", Long.toString(tableId));
         insertAttr.appendChild(columnData);
@@ -484,7 +499,8 @@ public class MetadataLiquibaseService {
      */
     private Element createInsertUnit(Document document, MlUnit mlUnit){
         Element insertUnit = document.createElement("insert");
-        insertUnit.setAttribute("tableName", mlUnit.getClass().getSimpleName());
+//        insertUnit.setAttribute("tableName", mlUnit.getClass().getSimpleName());
+        insertUnit.setAttribute("tableName", mlUnit.getMlClassTableName());
         for(String columnName: mlUnit.getColumnValues().keySet()){
             Object columnValue = mlUnit.getColumnValues().get(columnName);
 

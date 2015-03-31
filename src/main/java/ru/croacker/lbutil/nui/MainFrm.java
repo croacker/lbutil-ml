@@ -308,8 +308,9 @@ public class MainFrm extends JFrame {
 
     //TODO слишком дохуя сервисов, сделать меньше
     private void exportMlClass() {
+        DataSource dataSource = null;
         try {
-            DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
+            dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
 
             boolean readMlClass = false;
             if (ddlService.isMlDatabase(dataSource)) {
@@ -332,12 +333,15 @@ public class MainFrm extends JFrame {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            dataSourceService.destroyDataSource(dataSource);
         }
     }
 
     private void exportJavaClasses() {
+        DataSource dataSource = null;
         try {
-            DataSource dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
+            dataSource = dataSourceService.getDataSource(jpConnection.getConnection());
 
             boolean readMlClass = false;
             if (ddlService.isMlDatabase(dataSource)) {
@@ -359,6 +363,8 @@ public class MainFrm extends JFrame {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             JOptionPane.showMessageDialog(this, e.getMessage());
+        }finally {
+            dataSourceService.destroyDataSource(dataSource);
         }
     }
 

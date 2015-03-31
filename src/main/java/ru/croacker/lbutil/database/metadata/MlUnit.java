@@ -13,6 +13,10 @@ public abstract class MlUnit {
     @Getter
     private Map<String, Object> columnValues = Maps.newHashMap();
 
+    public String getMlClassTableName(){
+        return getClass().getSimpleName();
+    }
+
     public static  <T extends MlUnit> T newInstance(Class<T> clazz){
         try {
             return clazz.newInstance();

@@ -6,6 +6,8 @@ import java.util.List;
 /**
  *
  */
+//TODO 1.Проверить заполнение и отдачу данных из атрибутов, чтобы не было 0 вместо null
+//TODO 2.Создаваемый Java-класс должен сожержать методо возвращающий DPM
 public class MlClass extends MlUnit {
 
     public static final String QUE = "select * from \"" + MlClass.class.getSimpleName() + "\"";

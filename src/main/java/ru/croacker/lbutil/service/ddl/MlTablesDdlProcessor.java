@@ -4,6 +4,10 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.ddlutils.Platform;
+import org.apache.ddlutils.PlatformFactory;
+import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croacker.lbutil.database.convertor.CommonResultSetConvertor;
@@ -97,6 +101,21 @@ public class MlTablesDdlProcessor implements DatabaseDdlProcessor {
         mlDatabase.getUtilAccesses().addAll((Collection<MlUtilAccess>) execSelect(dataSource, getMlTableHandler(MlUtilAccess.class), MlUtilAccess.QUE));
         mlDatabase.getUtilsBlocks().addAll((Collection<MlUtilsBlock>) execSelect(dataSource, getMlTableHandler(MlUtilsBlock.class), MlUtilsBlock.QUE));
 
+        //Обработка таблиц связей
+        List<String> mnRelationsTable = Lists.newArrayList();
+        Database database = getDatabaseModel(dataSource);
+        for (Table table : database.getTables()) {
+            if (table.getName().startsWith("MN_")) {
+                Collection<CommonMlUnit> mnRelations = (Collection<CommonMlUnit>) execSelect(dataSource, getMlTableHandler(CommonMlUnit.class), MessageFormat.format(CommonMlUnit.QUE, table.getName()));
+                for(CommonMlUnit commonMlUnit: mnRelations){
+                    commonMlUnit.setMlClassTableName(table.getName());
+                }
+                mlDatabase.getMnUnits().putAll(table.getName(), mnRelations);
+            }
+        }
+
+
+
         return mlDatabase;
     }
 
@@ -172,4 +191,34 @@ public class MlTablesDdlProcessor implements DatabaseDdlProcessor {
             }
         };
     }
+
+    /**
+     * Получить модель БД как Apache DDL
+     * @param dataSource
+     * @return
+     */
+    private Database getDatabaseModel(DataSource dataSource) {
+        String databaseName;
+        try {
+            databaseName = getDatabaseName(dataSource);
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+
+        Platform platform = PlatformFactory.createNewPlatformInstance(dataSource);
+        return platform.readModelFromDatabase(databaseName);
+    }
+
+    /**
+     * Получить имя БД
+     * @param dataSource
+     * @return
+     * @throws SQLException
+     */
+    private String getDatabaseName(DataSource dataSource) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        return connection.getCatalog();
+    }
+
 }
