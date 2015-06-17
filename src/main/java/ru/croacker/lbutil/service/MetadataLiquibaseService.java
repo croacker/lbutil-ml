@@ -29,6 +29,7 @@ public class MetadataLiquibaseService {
     folder = folder.trim();
 
     documents.put(FilenameUtils.concat(folder, "ml-class.xml"), getMlClassesDocument(mlDatabase));
+    documents.put(FilenameUtils.concat(folder, "ml-class-project.xml"), getProjectClassesDocument(mlDatabase));
     documents.put(FilenameUtils.concat(folder, formFileName("AttrGroup")), convertToDocument(mlDatabase.getAttrGroups()));
     documents.put(FilenameUtils.concat(folder, formFileName("AttrView")), convertToDocument(mlDatabase.getAttrViews()));
     documents.put(FilenameUtils.concat(folder, formFileName("ClassAccess")), convertToDocument(mlDatabase.getClassAccesses()));
@@ -72,25 +73,48 @@ public class MetadataLiquibaseService {
   }
 
   /**
-   * Файл с Ml классами
+   * Файл с Ml-классами
    *
    * @param mlDatabase
    * @return
    */
   private Document getMlClassesDocument(MlDatabase mlDatabase) {
-    Document document;
-    try {
-      document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-    } catch (ParserConfigurationException e) {
-      log.error(e.getMessage(), e);
-      throw new RuntimeException(e.getMessage(), e);
-    }
-
-    Element root = document.createElementNS("http://www.liquibase.org/xml/ns/dbchangelog", "databaseChangeLog");
-    root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd");
-    document.appendChild(root);
+    Document document = newDocument();
+    Element root = newRoot(document);
 
     for (MlClass mlClass : mlDatabase.getTables()) {
+      if(!mlClass.getTableName().startsWith("Ml")){
+        continue;
+      }
+      Long tableId = idForTable(mlDatabase, mlClass);
+      Element changeSet = document.createElement("changeSet");
+      changeSet.setAttribute("id", "ts_" + String.valueOf(new Date().getTime()) + String.valueOf(tableId));
+      changeSet.setAttribute("author", "somebadu");
+
+      changeSet.appendChild(createInsertClass(document, mlClass, tableId));
+
+      for (MlAttr mlAttr : mlClass.getColumns()) {
+        changeSet.appendChild(createInsertAttr(document, mlAttr, tableId));
+      }
+      root.appendChild(changeSet);
+    }
+    return document;
+  }
+
+  /**
+   * Файл с Ml-классами ПРОЕКТА
+   *
+   * @param mlDatabase
+   * @return
+   */
+  private Document getProjectClassesDocument(MlDatabase mlDatabase) {
+    Document document = newDocument();
+    Element root = newRoot(document);
+
+    for (MlClass mlClass : mlDatabase.getTables()) {
+      if(mlClass.getTableName().startsWith("Ml")){
+        continue;
+      }
       Long tableId = idForTable(mlDatabase, mlClass);
       Element changeSet = document.createElement("changeSet");
       changeSet.setAttribute("id", "ts_" + String.valueOf(new Date().getTime()) + String.valueOf(tableId));
@@ -113,17 +137,8 @@ public class MetadataLiquibaseService {
    * @return
    */
   private Document convertToDocument(List<? extends MlUnit> units) {
-    Document document;
-    try {
-      document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-    } catch (ParserConfigurationException e) {
-      log.error(e.getMessage(), e);
-      throw new RuntimeException(e.getMessage(), e);
-    }
-
-    Element root = document.createElementNS("http://www.liquibase.org/xml/ns/dbchangelog", "databaseChangeLog");
-    root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd");
-    document.appendChild(root);
+    Document document = newDocument();
+    Element root = newRoot(document);
 
     for (MlUnit unit : units) {
       Element changeSet = document.createElement("changeSet");
@@ -134,6 +149,28 @@ public class MetadataLiquibaseService {
       root.appendChild(changeSet);
     }
     return document;
+  }
+
+  /**
+   * Новый XML документ
+   * @return
+   */
+  private Document newDocument(){
+    Document document;
+    try {
+      document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    } catch (ParserConfigurationException e) {
+      log.error(e.getMessage(), e);
+      throw new RuntimeException(e.getMessage(), e);
+    }
+    return document;
+  }
+
+  private Element newRoot(Document document){
+    Element root = document.createElementNS("http://www.liquibase.org/xml/ns/dbchangelog", "databaseChangeLog");
+    root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd");
+    document.appendChild(root);
+    return root;
   }
 
   private Long idForTable(MlDatabase mlDatabase, MlUnit mlClass) {
@@ -567,7 +604,6 @@ public class MetadataLiquibaseService {
    */
   private Element createInsertUnit(Document document, MlUnit mlUnit) {
     Element insertUnit = document.createElement("insert");
-//        insertUnit.setAttribute("tableName", mlUnit.getClass().getSimpleName());
     insertUnit.setAttribute("tableName", mlUnit.getMlClassTableName());
     for (String columnName : mlUnit.getColumnValues().keySet()) {
       Object columnValue = mlUnit.getColumnValues().get(columnName);
