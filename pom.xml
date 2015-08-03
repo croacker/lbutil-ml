@@ -203,7 +203,7 @@
                     <finalName>lbutil-ml</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.homeworld.arithmetic.ArithmeticApp</mainClass>
+                            <mainClass>ru.croacker.lbutil.LbUtilApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
