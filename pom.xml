@@ -222,6 +222,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <repositoryLayout>flat</repositoryLayout>
                     <programs>
                         <program>
                             <mainClass>ru.croacker.lbutil.LbUtilApp</mainClass>
