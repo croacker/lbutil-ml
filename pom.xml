@@ -168,7 +168,7 @@
                 <executions>
                     <execution>
                         <id>install-paho</id>
-                        <phase>clean</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>install-file</goal>
                         </goals>
