@@ -1,5 +1,6 @@
 ##Liquibase + ML metadata util.
-Look https://github.com/croacker/lbutil
+UI for create and apply liquibase changelog
+Also, look https://github.com/croacker/lbutil
 
 ###After clone:
 * cd lbutil-ml
