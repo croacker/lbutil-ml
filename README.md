@@ -1,7 +1,7 @@
-Liquibase + ML metadata util. 
+#Liquibase + ML metadata util.
 Look https://github.com/croacker/lbutil
 
-After clone:
+#After clone:
 cd lbutil-ml
 mvn validate
 mvn clean package appassembler:assemble
