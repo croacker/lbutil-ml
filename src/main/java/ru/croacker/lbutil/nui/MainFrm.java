@@ -1,8 +1,13 @@
 package ru.croacker.lbutil.nui;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -132,11 +137,11 @@ public class MainFrm extends JFrame {
                                 .addComponent(jpConnectionsListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jpContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jpConnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jpConnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jpImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jpExportMlMetadata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jpExportJavaClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 )
                                 .addContainerGap())
         );
@@ -282,27 +287,26 @@ public class MainFrm extends JFrame {
     }
 
     private void testConnection() {
-        JOptionPane.showMessageDialog(this,
-                liquibaseService.testConnection(jpConnection.getConnection()));
+        showInfo(liquibaseService.testConnection(jpConnection.getConnection()));
     }
 
     private void importChangelog() {
         try {
             liquibaseService.aplyChangelog(jpConnection.getConnection(), jpImport.getFileName());
-            JOptionPane.showMessageDialog(this, "Импорт успешно завершен!");
+            showInfo("Импорт успешно завершен!");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            showInfo(e.getMessage());
         }
     }
 
     private void exportChangelog() {
         try {
             liquibaseService.createChangelog(jpConnection.getConnection(), jpExport.getFileName());
-            JOptionPane.showMessageDialog(this, "Экспорт успешно завершен!");
+            showInfo("Экспорт успешно завершен!");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            showInfo(e.getMessage());
         }
     }
 
@@ -329,10 +333,10 @@ public class MainFrm extends JFrame {
 
             Map<String, Document> documents = metadataLiquibaseService.formDocument(mlDatabase, jpExportMlMetadata.getFileName());
             fileWriteService.writeXml(documents);
-            JOptionPane.showMessageDialog(this, "Экспорт успешно завершен!");
+            showInfo("Экспорт успешно завершен!");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            showInfo(e.getMessage());
         } finally {
             dataSourceService.destroyDataSource(dataSource);
         }
@@ -359,11 +363,11 @@ public class MainFrm extends JFrame {
             }
             List<JavaClassModel> classes = javaClassService.formClasses(mlDatabase);
             fileWriteService.writeClasses(classes, jpExportJavaClasses.getFolderName());
-            JOptionPane.showMessageDialog(this, "Экспорт успешно завершен!");
+            showInfo("Экспорт успешно завершен!");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }finally {
+            showInfo(e.getMessage());
+        } finally {
             dataSourceService.destroyDataSource(dataSource);
         }
     }
@@ -379,5 +383,12 @@ public class MainFrm extends JFrame {
 
     private void aplyCurrentConnection() {
         jpConnection.setConnection(jpConnectionsListPanel.getSelected());
+    }
+
+    private void showInfo(String msg) {
+        int countInLine = this.getWidth()/6 - 15;
+        String text = StringUtils.join(IteratorUtils.toList(
+                Splitter.fixedLength(countInLine).split(msg).iterator()), "\n");
+        JOptionPane.showMessageDialog(this, text);
     }
 }
