@@ -282,7 +282,7 @@ public class MainFrm extends JFrame {
     }
 
     private void testConnection() {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(this,
                 liquibaseService.testConnection(jpConnection.getConnection()));
     }
 
