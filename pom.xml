@@ -15,7 +15,7 @@
         <oracle.driver.lib>ojdbc6</oracle.driver.lib>
         <springframework.version>4.3.2.RELEASE</springframework.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
-        <liquibase.core.version>3.1.1</liquibase.core.version>
+        <liquibase.core.version>3.5.1</liquibase.core.version>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <lombok.version>1.16.10</lombok.version>

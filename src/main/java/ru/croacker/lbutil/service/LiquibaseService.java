@@ -62,11 +62,11 @@ public class LiquibaseService {
 
     private Database getDatabase(DbConnectionDto connection) throws DatabaseException {
         return CommandLineUtils.createDatabaseObject(
-                getClass().getClassLoader(),
+                new FileSystemResourceAccessor(),
                 getUrl(connection),
                 connection.getUser(),
                 connection.getPassword(),
-                connection.getJdbcDriver(), null, null, false, false, null, null, null, null);
+                connection.getJdbcDriver(), null, null, false, false, null, null, null, null, null, null, null);
     }
 
     private String getUrl(DbConnectionDto connection) {
